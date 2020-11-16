@@ -1,0 +1,125 @@
+[
+    {
+        "id": "74209ff0.cbda3",
+        "type": "http in",
+        "z": "f9c5c815.c98958",
+        "name": "",
+        "url": "/from_location_solver",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 210,
+        "y": 140,
+        "wires": [
+            [
+                "1e9cc84f.260308",
+                "fb12618e.b7fc9",
+                "e2e59476.5e6dc8"
+            ]
+        ]
+    },
+    {
+        "id": "1e9cc84f.260308",
+        "type": "debug",
+        "z": "f9c5c815.c98958",
+        "name": "debug: Solver Push",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 230,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "22d73091.b3cdb",
+        "type": "worldmap",
+        "z": "f9c5c815.c98958",
+        "name": "Location map",
+        "lat": "47.4468018",
+        "lon": "18.92373",
+        "zoom": "6",
+        "layer": "OSM",
+        "cluster": "",
+        "maxage": "",
+        "usermenu": "show",
+        "layers": "show",
+        "panit": "true",
+        "panlock": "false",
+        "zoomlock": "false",
+        "hiderightclick": "false",
+        "coords": "deg",
+        "showgrid": "true",
+        "path": "map",
+        "x": 880,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "fb12618e.b7fc9",
+        "type": "function",
+        "z": "f9c5c815.c98958",
+        "name": "Format coordinates for Map",
+        "func": "\nlet point = msg.payload;\n\nmsg.payload = {\n    layer: point.deviceEUI,\n    name: point.time,\n    icon: \"globe\",\n    iconColor: \"#505050\",\n    lon: point.coordinates[0],\n    lat: point.coordinates[1]\n};\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 560,
+        "y": 140,
+        "wires": [
+            [
+                "22d73091.b3cdb",
+                "b1853429.6c73d8"
+            ]
+        ]
+    },
+    {
+        "id": "e2e59476.5e6dc8",
+        "type": "http response",
+        "z": "f9c5c815.c98958",
+        "name": "http response",
+        "statusCode": "",
+        "headers": {
+            "content-type": "application/json"
+        },
+        "x": 280,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "10398f3c.1cd161",
+        "type": "comment",
+        "z": "f9c5c815.c98958",
+        "name": "Push from ThingPark Location Solver",
+        "info": "",
+        "x": 190,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "b1853429.6c73d8",
+        "type": "debug",
+        "z": "f9c5c815.c98958",
+        "name": "debug: Map Feed",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 610,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "4d4e6eb4.f85f2",
+        "type": "comment",
+        "z": "f9c5c815.c98958",
+        "name": "Map Application",
+        "info": "",
+        "x": 840,
+        "y": 60,
+        "wires": []
+    }
+]

@@ -1,0 +1,318 @@
+[
+    {
+        "id": "c09007f4.e59478",
+        "type": "comment",
+        "z": "490e650d.6b185c",
+        "name": "From NS to Location Solver - REST",
+        "info": "https://docs.senetco.io/ap/api/#uplink-api",
+        "x": 200,
+        "y": 1680,
+        "wires": []
+    },
+    {
+        "id": "eceed559.3303d8",
+        "type": "comment",
+        "z": "490e650d.6b185c",
+        "name": "From Location Solver to NS - REST",
+        "info": "https://docs.senetco.io/ap/api/#downlink-api\n",
+        "x": 200,
+        "y": 1820,
+        "wires": []
+    },
+    {
+        "id": "9d79df62.70bdb",
+        "type": "comment",
+        "z": "490e650d.6b185c",
+        "name": "Senet Integration Examples",
+        "info": "[Senet API documentation](https://docs.senetco.io/ap/api/)",
+        "x": 140,
+        "y": 1620,
+        "wires": []
+    },
+    {
+        "id": "5e929e5e.acc67",
+        "type": "http in",
+        "z": "490e650d.6b185c",
+        "name": "",
+        "url": "/uplink_senet/0001",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 220,
+        "y": 1760,
+        "wires": [
+            [
+                "2e3e73dc.7c678c",
+                "4f99eb4c.0bfcb4",
+                "517c4dfe.0db114"
+            ]
+        ]
+    },
+    {
+        "id": "2e3e73dc.7c678c",
+        "type": "http response",
+        "z": "490e650d.6b185c",
+        "name": "http response",
+        "statusCode": "",
+        "headers": {
+            "content-type": "application/json"
+        },
+        "x": 520,
+        "y": 1780,
+        "wires": []
+    },
+    {
+        "id": "6f86923e.e5092c",
+        "type": "debug",
+        "z": "490e650d.6b185c",
+        "name": "debug: to Solver",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 800,
+        "y": 1700,
+        "wires": []
+    },
+    {
+        "id": "cd440f1a.2c586",
+        "type": "http request",
+        "z": "490e650d.6b185c",
+        "name": "Send UL to Location Solver",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "https://dx-api.thingpark.com/location/latest/api/feeds",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "bearer",
+        "x": 1080,
+        "y": 1740,
+        "wires": [
+            [
+                "341e592e.850c56"
+            ]
+        ]
+    },
+    {
+        "id": "341e592e.850c56",
+        "type": "debug",
+        "z": "490e650d.6b185c",
+        "name": "debug: Solver response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1110,
+        "y": 1700,
+        "wires": []
+    },
+    {
+        "id": "1a371fc7.c0338",
+        "type": "http in",
+        "z": "490e650d.6b185c",
+        "name": "",
+        "url": "/downlink_senet/0001",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 230,
+        "y": 1900,
+        "wires": [
+            [
+                "37d2c5b.a57e13a",
+                "6244586e.b5ed38",
+                "5692ec91.818074"
+            ]
+        ]
+    },
+    {
+        "id": "37d2c5b.a57e13a",
+        "type": "http response",
+        "z": "490e650d.6b185c",
+        "name": "http response",
+        "statusCode": "",
+        "headers": {
+            "content-type": "application/json"
+        },
+        "x": 520,
+        "y": 1920,
+        "wires": []
+    },
+    {
+        "id": "ec21c30.018404",
+        "type": "inject",
+        "z": "490e650d.6b185c",
+        "name": "Sample msg - Loc Solver",
+        "topic": "",
+        "payload": "{\"type\":\"downlink\",\"deveui\":\"20635F00C800026D\",\"port\":\"2\",\"payload\":\"0105\"}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 210,
+        "y": 1860,
+        "wires": [
+            [
+                "5692ec91.818074"
+            ]
+        ]
+    },
+    {
+        "id": "f34c01fd.f322a",
+        "type": "debug",
+        "z": "490e650d.6b185c",
+        "name": "debug: to NS",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 790,
+        "y": 1840,
+        "wires": []
+    },
+    {
+        "id": "75267d11.db15f4",
+        "type": "http request",
+        "z": "490e650d.6b185c",
+        "name": "Send DL to Senet NS!!!",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": false,
+        "url": "https://portal.senetco.io/rest/current/device/sendmsg?apikey={{params.apikey}}&eui={{params.eui}}&value={{params.value}}&confirmed={{params.confirmed}}&port={{params.port}}&timeoutMinutes={{params.timeoutMinutes}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 1070,
+        "y": 1880,
+        "wires": [
+            [
+                "9f122833.511db8"
+            ]
+        ]
+    },
+    {
+        "id": "9f122833.511db8",
+        "type": "debug",
+        "z": "490e650d.6b185c",
+        "name": "debug: NS response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1100,
+        "y": 1840,
+        "wires": []
+    },
+    {
+        "id": "4f99eb4c.0bfcb4",
+        "type": "function",
+        "z": "490e650d.6b185c",
+        "name": "Senet UL interface",
+        "func": "/******************************************/\n/*** Senet UL interface                 ***/\n/******************************************/\n\nbody = (typeof msg.payload == 'string') ? JSON.parse(msg.payload) : msg.payload;\n\n\nlet feeds1 = {\n  \"deviceEUI\": \"string\",\n  \"customerId\": \"string\",\n  \"time\": \"string\",\n  \"coordinates\": [],\n  \"coordinatesType\": \"MOBILE_DEVICE_COORDINATES\",\n  \"coordinatesAccuracy\": 0,\n  \"solverInput\": {\n    \"solverInputType\": \"FeedInputForGenericSolver\",\n    \"sequenceNumber\": 0,\n    \"port\": 0,\n    \"receptionTime\": \"string\",\n    \"SF\": 0,\n    \"packets\": [\n      {\n        \"baseStationId\": \"string\",\n        \"antennaId\": 0,\n        \"antennaCoordinates\": [\n          0\n        ],\n        \"antennaHeight\": 0,\n        \"SNR\": 0,\n        \"RSSI\": 0,\n        \"barometerMeasure\": 0,\n        \"arrivalSeconds\": 0,\n        \"arrivalAdditionalNanos\": 0\n      }\n    ],\n    \"dynamicMotionState\": \"MOVING\",\n    \"temperatureMeasure\": 0,\n    \"accelerometerMeasures\": [\n      0\n    ],\n    \"gyroscopeMeasures\": [\n      0\n    ],\n    \"barometerMeasure\": 0,\n    \"lastContext\": \"string\"\n  },\n  \"payload\": {\n    \"deviceProfileId\": \"string\",\n    \"payloadEncoded\": \"string\"\n  }\n}\n\n\nlet feeds = {\n    // deviceEUI: \"\",                                     // mandatory\n    // time: \"\",\n    // coordinates: [],                                   // [longitude, latitude, altitude]\n                                                          // used if NS provides resolved coordinates\n    solverInput: {\n        solverInputType: \"FeedInputForGpsSolver\",\n        // sequenceNumber: 1,                             // LoRaWAN FCntUp\n        // port: 1,                                       // LoRaWAN FPort\n        // receptionTime: \"\",\n        // SF: 12,                                        // LoRaWAN Spreading Factor\n        packets: [\n            // {\n                // baseStationId: \"0805022D\",\n                // antennaId: 0,\n                // antennaCoordinates: [7.0513, 43.6181], // [longitude, latitude, altitude]\n                // antennaHeight: 150,                    // in cm\n                // SNR: 10,                               // in dB\n                // RSSI: -29,                             // in dBm\n                // barometerMeasure: 0,                   // in mB\n                // arrivalSeconds: 1,                     // in seconds\n                // arrivalAdditionalNanos: 7275           // in nanoseconds\n            // }\n        ]\n        // dynamicMotionState: \"string\",    // ['MOVING', 'STATIC', 'UNKNOWN']\n        // temperatureMeasure: 0,           // in Celsius\n        // accelerometerMeasures: [],       // measures per axis, i.e. [x, y, z]\n        // gyroscopeMeasures: [],           // measures per axis, i.e. [roll, pitch, yaw]\n        // barometerMeasure: 0,             // in mBar\n        // lastContext: \"string\"            // Base64 encoded binary solver state\n                                            // with the last calculated position\n    },\n    payload: {\n        deviceProfileId: \"ABEEWAY/MICRO\",   // Currently only Abeeway Microtracker and\n                                            // Industrial Tracker are supported. \"deviceProfileId\"\n                                            // should be set to \"ABEEWAY/MICRO\" for both\n        payloadEncoded: \"\"\n    }\n}\n\nif ('devEui' in body) { \n    feeds.deviceEUI = body.devEui;\n}\nelse { \n    throw new Error(\"Missing property: devEui\"); \n}\n\nif (('txtime' in body) && (typeof body.txtime === 'string')) { \n    let t = (new Date(body.txtime)).toISOString();\n    feeds.time = t;\n    feeds.solverInput.receptionTime = t;\n}\nif ('seqno' in body) { \n    feeds.solverInput.sequenceNumber = body.seqno; \n}\nif ('port' in body) { \n    feeds.solverInput.port = body.port \n}\nif ('datarate' in body) {\n    feeds.solverInput.SF = 12-body.datarate;\n} else { feeds.solverInput.SF = 10; }  // TODO!\n\nlet packet = {};\nif ('gwEui' in body) {\n    packet.baseStationId = body.gwEui;\n}\nif ('rssi' in body) {\n    packet.RSSI = body.rssi;\n} else { packet.RSSI = -100; } // TODO!\nif ('snr' in body) {\n    packet.SNR = body.snr;\n} else { packet.SNR = -1; } // TODO!\nfeeds.solverInput.packets.push(packet);\n\nif ('pdu' in body) { \n    feeds.payload.payloadEncoded = body.pdu; \n}\n\nmsg.payload = feeds;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 750,
+        "y": 1740,
+        "wires": [
+            [
+                "6f86923e.e5092c",
+                "cd440f1a.2c586",
+                "698abae2.89ba74"
+            ]
+        ]
+    },
+    {
+        "id": "51670104.87ed5",
+        "type": "inject",
+        "z": "490e650d.6b185c",
+        "name": "Sample msg - Senet",
+        "topic": "LoRaWAN_Uplink",
+        "payload": "{\"ack\":false,\"channel\":15,\"datarate\":3,\"devClass\":\"A\",\"devEui\":\"20635F00C800001F\",\"freq\":905.3,\"gwEui\":\"00250C00010002D0\",\"joinId\":2,\"pdu\":\"030A99743919CC40D03C61FDD0589630A4751AC63C3786832F14C6B0DAF9A98D9EC5\",\"port\":17,\"rssi\":-49,\"seqno\":2467,\"snr\":9.75,\"txtime\":\"2020-04-10T05:40:09.107Z\"}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 190,
+        "y": 1720,
+        "wires": [
+            [
+                "4f99eb4c.0bfcb4"
+            ]
+        ]
+    },
+    {
+        "id": "5692ec91.818074",
+        "type": "function",
+        "z": "490e650d.6b185c",
+        "name": "Senet DL interface",
+        "func": "/******************************************/\n/*** Senet DL interface              ***/\n/******************************************/\n\nmsg.params = {\n    // apikey: 'AK3:UFDzHTMmVEFy5tUYNzahSxwQ69L7Ud5E9XQYUggF',\n    apikey: 'AK3:UeTk0z2FTyjYTxyDhfgSvf3RE5ADcgiDvaQNqJcSV',\n    eui: msg.payload.deveui,\n    value: msg.payload.payload,\n    confirmed: true,\n    port: msg.payload.port,\n    timeoutMinutes: 2\n}\n\n// https://portal.senetco.io/rest/current/device/sendmsg?apikey={{params.apikey}}&eui={{params.eui}}&value={{params.value}}&confirmed={{params.confirmed}}&port={{params.port}}&timeoutMinutes={{params.timeoutMinutes}} \n\n/*\nmsg.params = {\n    eui: msg.payload.deveui,\n    pdu: msg.payload.payload,\n    port: msg.payload.port,\n};\n// https://api.senetco.io/rest/integration/device/sendmsg?eui={{params.eui}}&pdu={{params.pdu}}&port={{params.port}}\n*/\n\nmsg.payload=\"\";\nmsg.headers = {\n//     \"authorization\": \"AK3:UFDzHTMmVEFy5tUYNzahSxwQ69L7Ud5E9XQYUggF\",\n    \"authorization\": \"AK3:UeTk0z2FTyjYTxyDhfgSvf3RE5ADcgiDvaQNqJcSV\",\n    \"content-type\": \"application/x-www-form-urlencoded\"\n}\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 750,
+        "y": 1880,
+        "wires": [
+            [
+                "f34c01fd.f322a",
+                "75267d11.db15f4"
+            ]
+        ]
+    },
+    {
+        "id": "698abae2.89ba74",
+        "type": "link out",
+        "z": "490e650d.6b185c",
+        "name": "To Codec Service, To Location Solver",
+        "links": [
+            "da189ded.e2ddc",
+            "ff201d2f.bf016",
+            "88ffbc99.452ca",
+            "22028fd3.6d5d9",
+            "4c5b4326.05cbcc",
+            "c2754bbe.3f2c48"
+        ],
+        "x": 975,
+        "y": 1780,
+        "wires": []
+    },
+    {
+        "id": "517c4dfe.0db114",
+        "type": "debug",
+        "z": "490e650d.6b185c",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 550,
+        "y": 1700,
+        "wires": []
+    },
+    {
+        "id": "6244586e.b5ed38",
+        "type": "debug",
+        "z": "490e650d.6b185c",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 550,
+        "y": 1840,
+        "wires": []
+    }
+]

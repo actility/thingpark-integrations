@@ -1,0 +1,285 @@
+[
+    {
+        "id": "b5110f66.14b12",
+        "type": "comment",
+        "z": "490e650d.6b185c",
+        "name": "Multitech Integration Examples",
+        "info": "[Multitech MQTT Message Format](http://www.multitech.net/developer/software/lora/lora-network-server/mqtt-messages/)",
+        "x": 150,
+        "y": 2020,
+        "wires": []
+    },
+    {
+        "id": "7ff7dd39.68a664",
+        "type": "mqtt out",
+        "z": "490e650d.6b185c",
+        "name": "[mqtt publish] lora/<DEV-EUI>/up !!!",
+        "topic": "lora/<DEV-EUI>/up",
+        "qos": "",
+        "retain": "",
+        "broker": "7cb14d40.1a78c4",
+        "x": 500,
+        "y": 2100,
+        "wires": []
+    },
+    {
+        "id": "ad3a6ed0.0c798",
+        "type": "inject",
+        "z": "490e650d.6b185c",
+        "name": "Sample msg - Multitech",
+        "topic": "LoRaWAN_Uplink",
+        "payload": "{\"time\":\"2020-03-31T16:21:17.528002Z\",\"tmst\":3512348611,\"chan\":2,\"rfch\":0,\"freq\":866.349812,\"stat\":1,\"modu\":\"LORA\",\"datr\":\"SF7BW125\",\"codr\":\"4/6\",\"rssi\":-35,\"lsnr\":5.1,\"size\":32,\"data\":\"-DS4CGaDCdG+48eJNM3Vai-zDpsR71Pn9CPA9uCON84\",\"ack\":false,\"adr\":true,\"mhdr\":\"4006000000000100\",\"opts\":\"\",\"port\":1,\"seqn\":1,\"fcnt\":1456,\"cls\":\"\",\"deveui\":\"00-80-00-00-00-00-e1-9a\",\"appeui\":\"00-88-88-88-00-00-e1-9b\",\"gweui\":\"00-80-00-00-00-00-e1-9c\"}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 200,
+        "y": 2120,
+        "wires": [
+            [
+                "7ff7dd39.68a664"
+            ]
+        ]
+    },
+    {
+        "id": "52b72f01.a3344",
+        "type": "http request",
+        "z": "490e650d.6b185c",
+        "name": "Send UL to Location Solver",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "https://dx-api.thingpark.com/location/latest/api/feeds",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "bearer",
+        "x": 1080,
+        "y": 2160,
+        "wires": [
+            [
+                "8cf270e7.71ab8"
+            ]
+        ]
+    },
+    {
+        "id": "8cf270e7.71ab8",
+        "type": "debug",
+        "z": "490e650d.6b185c",
+        "name": "debug: Solver response",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1110,
+        "y": 2120,
+        "wires": []
+    },
+    {
+        "id": "f6cdbc51.1a4ba",
+        "type": "function",
+        "z": "490e650d.6b185c",
+        "name": "Multitech UL interface",
+        "func": "/******************************************/\n/*** Multitech UL interface                   ***/\n/******************************************/\n\nbody = (typeof msg.payload == 'string') ? JSON.parse(msg.payload) : msg.payload;\n\n/*\nlet body = {\n    \"time\": \"2020-03-31T16:21:17.528002Z\",\n    \"tmst\": 3512348611,\n    \"chan\": 2,\n    \"rfch\": 0,\n    \"freq\": 866.349812,\n    \"stat\": 1,\n    \"modu\": \"LORA\",\n    \"datr\": \"SF7BW125\",\n    \"codr\": \"4/6\",\n    \"rssi\": -35,\n    \"lsnr\": 5.1,\n    \"size\": 32,\n    \"data\": \"-DS4CGaDCdG+48eJNM3Vai-zDpsR71Pn9CPA9uCON84\",\n    \"ack\": false,\n    \"adr\": true,\n    \"mhdr\": \"4006000000000100\",\n    \"opts\": \"\",\n    \"port\": 1,\n    \"seqn\": 1,\n    \"fcnt\": 1456,\n    \"cls\": \"\",\n    \"deveui\": \"00-80-00-00-00-00-e1-9a\",\n    \"appeui\": \"00-88-88-88-00-00-e1-9b\",\n    \"gweui\": \"00-80-00-00-00-00-e1-9c\"\n}\n*/\n\nlet feeds = {\n    // deviceEUI: \"\",                                     // mandatory\n    // time: \"\",\n    // coordinates: [],                                   // [longitude, latitude, altitude]\n                                                          // used if NS provides resolved coordinates\n    solverInput: {\n        solverInputType: \"FeedInputForGpsSolver\",\n        // sequenceNumber: 1,                             // LoRaWAN FCntUp\n        // port: 1,                                       // LoRaWAN FPort\n        // receptionTime: \"\",\n        // SF: 12,                                        // LoRaWAN Spreading Factor\n        packets: [\n            // {\n                // baseStationId: \"0805022D\",\n                // antennaId: 0,\n                // antennaCoordinates: [7.0513, 43.6181], // [longitude, latitude, altitude]\n                // antennaHeight: 150,                    // in cm\n                // SNR: 10,                               // in dB\n                // RSSI: -29,                             // in dBm\n                // barometerMeasure: 0,                   // in mB\n                // arrivalSeconds: 1,                     // in seconds\n                // arrivalAdditionalNanos: 7275           // in nanoseconds\n            // }\n        ]\n        // dynamicMotionState: \"string\",    // ['MOVING', 'STATIC', 'UNKNOWN']\n        // temperatureMeasure: 0,           // in Celsius\n        // accelerometerMeasures: [],       // measures per axis, i.e. [x, y, z]\n        // gyroscopeMeasures: [],           // measures per axis, i.e. [roll, pitch, yaw]\n        // barometerMeasure: 0,             // in mBar\n        // lastContext: \"string\"            // Base64 encoded binary solver state\n                                            // with the last calculated position\n    },\n    payload: {\n        deviceProfileId: \"ABEEWAY/MICRO\",   // Currently only Abeeway Microtracker and\n                                            // Industrial Tracker are supported. \"deviceProfileId\"\n                                            // should be set to \"ABEEWAY/MICRO\" for both\n        payloadEncoded: \"\"\n    }\n}\n\nif ('deveui' in body) { \n    feeds.deviceEUI = body.deveui.replace(/-/g,\"\").toUpperCase(); \n}\nelse { \n    throw new Error(\"Missing property: deveui\"); \n}\n\nif ( 'time' in body ) { \n    feeds.time = body.time;\n}\n\nif ('seqn' in body) { \n    feeds.solverInput.sequenceNumber = body.seqn; \n}\nif ('port' in body) { \n    feeds.solverInput.port = body.port \n}\n\n\nif ('time' in body) { \n    feeds.solverInput.receptionTime = body.time; \n}\nif ('datr' in body) { \n    feeds.solverInput.SF = parseInt(body.datr.substring(2,4)); // SF7BW125\n}\nlet packet = {};\nif ('gweui' in body) { \n    packet.baseStationId = body.gweui; \n} \nif ('lsnr'in body) { \n    packet.SNR = body.lsnr; \n}\nif ('rssi' in body) { \n    packet.RSSI = body.rssi; \n}\nfeeds.solverInput.packets.push(packet);\n\n\nif ('data' in body) { \n    feeds.payload.payloadEncoded = Buffer.from(body.data, 'base64').toString('hex'); \n}\n\nmsg.payload = feeds;\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 760,
+        "y": 2160,
+        "wires": [
+            [
+                "a4d9a022.5f099",
+                "52b72f01.a3344",
+                "167b4608.10d6da"
+            ]
+        ]
+    },
+    {
+        "id": "e7e7a13b.c8b9b",
+        "type": "comment",
+        "z": "490e650d.6b185c",
+        "name": "From NS to Location Solver - MQTT",
+        "info": "",
+        "x": 200,
+        "y": 2080,
+        "wires": []
+    },
+    {
+        "id": "cbb9bb8b.a97588",
+        "type": "comment",
+        "z": "490e650d.6b185c",
+        "name": "From Location Solver to NS - MQTT",
+        "info": "",
+        "x": 200,
+        "y": 2220,
+        "wires": []
+    },
+    {
+        "id": "a4d9a022.5f099",
+        "type": "debug",
+        "z": "490e650d.6b185c",
+        "name": "debug: to Solver",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 760,
+        "y": 2120,
+        "wires": []
+    },
+    {
+        "id": "606a321e.b3d21c",
+        "type": "mqtt in",
+        "z": "490e650d.6b185c",
+        "name": "[mqtt subscribe] lora/<DEV-EUI>/up !!!",
+        "topic": "lora/<DEV-EUI>/up",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "7cb14d40.1a78c4",
+        "x": 250,
+        "y": 2160,
+        "wires": [
+            [
+                "f6cdbc51.1a4ba"
+            ]
+        ]
+    },
+    {
+        "id": "beb606f4.4d3708",
+        "type": "inject",
+        "z": "490e650d.6b185c",
+        "name": "Sample msg - Loc Solver",
+        "topic": "",
+        "payload": "{\"type\":\"downlink\",\"deveui\":\"20635F0108000496\",\"port\":12,\"payload\":\"AABBCC\"}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 210,
+        "y": 2260,
+        "wires": [
+            [
+                "123c8fb5.9ab86"
+            ]
+        ]
+    },
+    {
+        "id": "447d9935.ff0798",
+        "type": "http in",
+        "z": "490e650d.6b185c",
+        "name": "",
+        "url": "/downlink_multitech/0001",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 240,
+        "y": 2300,
+        "wires": [
+            [
+                "8c1708ee.2dbda8",
+                "123c8fb5.9ab86"
+            ]
+        ]
+    },
+    {
+        "id": "8c1708ee.2dbda8",
+        "type": "http response",
+        "z": "490e650d.6b185c",
+        "name": "http response",
+        "statusCode": "",
+        "headers": {
+            "content-type": "application/json"
+        },
+        "x": 520,
+        "y": 2320,
+        "wires": []
+    },
+    {
+        "id": "123c8fb5.9ab86",
+        "type": "function",
+        "z": "490e650d.6b185c",
+        "name": "Multitech DL interface",
+        "func": "/******************************************/\n/*** Multitech DL interface              ***/\n/******************************************/\n\nlet params = msg.payload;\nmsg.payload = {\n    \"deveui\": params.deveui,\n    \"data\": Buffer.from(params.payload, 'hex').toString('base64'),\n    \"port\": params.port\n};\nmsg.topic = \"lora/\" + params.deveui + \"/down\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 760,
+        "y": 2280,
+        "wires": [
+            [
+                "5f81db83.f4a5b4",
+                "86625f98.37f87"
+            ]
+        ]
+    },
+    {
+        "id": "5f81db83.f4a5b4",
+        "type": "debug",
+        "z": "490e650d.6b185c",
+        "name": "debug: to NS",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 770,
+        "y": 2240,
+        "wires": []
+    },
+    {
+        "id": "86625f98.37f87",
+        "type": "mqtt out",
+        "z": "490e650d.6b185c",
+        "name": "[mqtt publish] lora/<DEV-EUI>/down !!!",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "broker": "7cb14d40.1a78c4",
+        "x": 1110,
+        "y": 2280,
+        "wires": []
+    },
+    {
+        "id": "167b4608.10d6da",
+        "type": "link out",
+        "z": "490e650d.6b185c",
+        "name": "To Codec Service, To Location Solver",
+        "links": [
+            "da189ded.e2ddc",
+            "ff201d2f.bf016",
+            "88ffbc99.452ca",
+            "22028fd3.6d5d9",
+            "4c5b4326.05cbcc",
+            "c2754bbe.3f2c48"
+        ],
+        "x": 975,
+        "y": 2200,
+        "wires": []
+    },
+    {
+        "id": "7cb14d40.1a78c4",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    }
+]

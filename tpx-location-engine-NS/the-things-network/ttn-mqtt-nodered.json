@@ -1,0 +1,285 @@
+[
+    {
+        "id": "a0b5d54.4dbdc28",
+        "type": "mqtt out",
+        "z": "490e650d.6b185c",
+        "name": "[mqtt publish] <my-app-id>/devices/<dev-id>/up !!!",
+        "topic": "<my-app-id>/devices/<dev-id>/up",
+        "qos": "",
+        "retain": "",
+        "broker": "7cb14d40.1a78c4",
+        "x": 510,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "bc865bcc.fb5a38",
+        "type": "inject",
+        "z": "490e650d.6b185c",
+        "name": "Sample msg - TTN",
+        "topic": "LoRaWAN_Uplink",
+        "payload": "{\"app_id\":\"my-app-id\",\"dev_id\":\"my-dev-id\",\"hardware_serial\":\"0102030405060708\",\"port\":17,\"counter\":2,\"is_retry\":false,\"confirmed\":false,\"payload_raw\":\"ClD2gwAA\",\"payload_fields\":{},\"metadata\":{\"time\":\"1970-01-01T00:00:00Z\",\"frequency\":868.1,\"modulation\":\"LORA\",\"data_rate\":\"SF7BW125\",\"bit_rate\":50000,\"coding_rate\":\"4/5\",\"gateways\":[{\"gtw_id\":\"ttn-herengracht-ams\",\"timestamp\":12345,\"time\":\"1970-01-01T00:00:00Z\",\"channel\":0,\"rssi\":-25,\"snr\":5,\"rf_chain\":0,\"latitude\":52.1234,\"longitude\":6.1234,\"altitude\":6}],\"latitude\":52.2345,\"longitude\":6.2345,\"altitude\":2},\"downlink_url\":\"https://integrations.thethingsnetwork.org/ttn-eu/api/v2/down/my-app-id/my-process-id?key=ttn-account-v2.secret\"}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 190,
+        "y": 920,
+        "wires": [
+            [
+                "a0b5d54.4dbdc28"
+            ]
+        ]
+    },
+    {
+        "id": "5075bfce.a14eb",
+        "type": "http request",
+        "z": "490e650d.6b185c",
+        "name": "Send UL to Location Solver",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "https://dx-api.thingpark.com/location/latest/api/feeds",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "bearer",
+        "x": 1080,
+        "y": 960,
+        "wires": [
+            [
+                "8d026cc4.56fae"
+            ]
+        ]
+    },
+    {
+        "id": "8d026cc4.56fae",
+        "type": "debug",
+        "z": "490e650d.6b185c",
+        "name": "debug: Solver response",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1110,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "41f50939.c37448",
+        "type": "function",
+        "z": "490e650d.6b185c",
+        "name": "TTN UL interface",
+        "func": "/******************************************/\n/*** TTN UL interface                   ***/\n/******************************************/\n\nbody = (typeof msg.payload == 'string') ? JSON.parse(msg.payload) : msg.payload;\n\nlet feeds = {\n    // deviceEUI: \"\",                                     // mandatory\n    // time: \"\",\n    // coordinates: [],                                   // [longitude, latitude, altitude]\n                                                          // used if NS provides resolved coordinates\n    solverInput: {\n        solverInputType: \"FeedInputForGpsSolver\",\n        // sequenceNumber: 1,                             // LoRaWAN FCntUp\n        // port: 1,                                       // LoRaWAN FPort\n        // receptionTime: \"\",\n        // SF: 12,                                        // LoRaWAN Spreading Factor\n        packets: [\n            // {\n                // baseStationId: \"0805022D\",\n                // antennaId: 0,\n                // antennaCoordinates: [7.0513, 43.6181], // [longitude, latitude, altitude]\n                // antennaHeight: 150,                    // in cm\n                // SNR: 10,                               // in dB\n                // RSSI: -29,                             // in dBm\n                // barometerMeasure: 0,                   // in mB\n                // arrivalSeconds: 1,                     // in seconds\n                // arrivalAdditionalNanos: 7275           // in nanoseconds\n            // }\n        ]\n        // dynamicMotionState: \"string\",    // ['MOVING', 'STATIC', 'UNKNOWN']\n        // temperatureMeasure: 0,           // in Celsius\n        // accelerometerMeasures: [],       // measures per axis, i.e. [x, y, z]\n        // gyroscopeMeasures: [],           // measures per axis, i.e. [roll, pitch, yaw]\n        // barometerMeasure: 0,             // in mBar\n        // lastContext: \"string\"            // Base64 encoded binary solver state\n                                            // with the last calculated position\n    },\n    payload: {\n        deviceProfileId: \"ABEEWAY/MICRO\",   // Currently only Abeeway Microtracker and\n                                            // Industrial Tracker are supported. \"deviceProfileId\"\n                                            // should be set to \"ABEEWAY/MICRO\" for both\n        payloadEncoded: \"\"\n    }\n}\n\nif ('hardware_serial' in body) { \n    feeds.deviceEUI = body.hardware_serial; \n}\nelse { \n    throw new Error(\"Missing property: hardware_serial\"); \n}\n\nif ( ('metadata' in body) && ('time' in body.metadata) ) { \n    feeds.time = body.metadata.time;\n}\n\nif ('counter' in body) { \n    feeds.solverInput.sequenceNumber = body.counter; \n}\nif ('port' in body) { \n    feeds.solverInput.port = body.port \n}\n\nif ('metadata' in body) {\n    if ('time' in body.metadata) { \n        feeds.solverInput.receptionTime = body.metadata.time; \n    }\n    if ('data_rate' in body.metadata) { \n        feeds.solverInput.SF = parseInt(body.metadata.data_rate.substring(2,4)); // SF7BW125\n    }\n    if ( ('gateways' in body.metadata) && Array.isArray(body.metadata.gateways) ) {\n        let gateways = body.metadata.gateways;\n        let packet;\n        for (let i=0; i<gateways.length; i++) {\n            packet = {};\n            if ('gtw_id' in gateways[i]) { \n                packet.baseStationId = gateways[i].gtw_id; \n            } \n            if ('snr'    in gateways[i]) { \n                packet.SNR = gateways[i].snr; \n            }\n            if ('rssi'   in gateways[i]) { \n                packet.RSSI = gateways[i].rssi; \n            }\n            if ( \n                ('longitude' in gateways[i]) && \n                ('latitude' in gateways[i]) \n            ) {\n                packet.antennaCoordinates = [ \n                    gateways[i].longitude,\n                    gateways[i].latitude\n                ];\n                if ('altitude' in gateways[i]) {\n                    packet.antennaCoordinates.push(gateways[i].altitude);\n                }\n            }\n            feeds.solverInput.packets.push(packet);\n        }\n    }\n}\n\nif ('payload_raw' in body) { \n    feeds.payload.payloadEncoded = Buffer.from(body.payload_raw, 'base64').toString('hex'); \n}\n\nmsg.payload = feeds;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 750,
+        "y": 960,
+        "wires": [
+            [
+                "5075bfce.a14eb",
+                "d7825b02.be36a8",
+                "f5730453.e45df8"
+            ]
+        ]
+    },
+    {
+        "id": "b4d5ccf0.90c8f",
+        "type": "comment",
+        "z": "490e650d.6b185c",
+        "name": "From NS to Location Solver - MQTT",
+        "info": "",
+        "x": 200,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "e21d602e.99a15",
+        "type": "comment",
+        "z": "490e650d.6b185c",
+        "name": "From Location Solver to NS - MQTT",
+        "info": "",
+        "x": 200,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "d7825b02.be36a8",
+        "type": "debug",
+        "z": "490e650d.6b185c",
+        "name": "debug: to Solver",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 760,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "50295ccc.1cd0d4",
+        "type": "mqtt in",
+        "z": "490e650d.6b185c",
+        "name": "[mqtt subscribe] <my-app-id>/devices/<dev-id>/up !!!",
+        "topic": "<my-app-id>/devices/<dev-id>/up",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "7cb14d40.1a78c4",
+        "x": 290,
+        "y": 960,
+        "wires": [
+            [
+                "41f50939.c37448"
+            ]
+        ]
+    },
+    {
+        "id": "387ef3c7.e39e9c",
+        "type": "inject",
+        "z": "490e650d.6b185c",
+        "name": "Sample msg - Loc Solver",
+        "topic": "",
+        "payload": "{\"type\":\"downlink\",\"deveui\":\"20635F0108000496\",\"port\":12,\"payload\":\"AABBCC\"}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 210,
+        "y": 1060,
+        "wires": [
+            [
+                "63658ec3.9cea2"
+            ]
+        ]
+    },
+    {
+        "id": "ab1efe31.c8116",
+        "type": "http in",
+        "z": "490e650d.6b185c",
+        "name": "",
+        "url": "/downlink_ttn_mqtt/0001",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 240,
+        "y": 1100,
+        "wires": [
+            [
+                "a9fb5675.8c28d8",
+                "63658ec3.9cea2"
+            ]
+        ]
+    },
+    {
+        "id": "a9fb5675.8c28d8",
+        "type": "http response",
+        "z": "490e650d.6b185c",
+        "name": "http response",
+        "statusCode": "",
+        "headers": {
+            "content-type": "application/json"
+        },
+        "x": 520,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "63658ec3.9cea2",
+        "type": "function",
+        "z": "490e650d.6b185c",
+        "name": "TTN DL interface",
+        "func": "/******************************************/\n/*** TTN DL interface              ***/\n/******************************************/\n\nlet params = msg.payload;\nmsg.payload = {\n    \"port\": params.port,\n    \"confirmed\": false,\n    \"payload_raw\": Buffer.from(params.payload, 'hex').toString('base64')\n};\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 750,
+        "y": 1080,
+        "wires": [
+            [
+                "3608194.f9185e6",
+                "51c1a064.377cc"
+            ]
+        ]
+    },
+    {
+        "id": "3608194.f9185e6",
+        "type": "debug",
+        "z": "490e650d.6b185c",
+        "name": "debug: to NS",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 770,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "51c1a064.377cc",
+        "type": "mqtt out",
+        "z": "490e650d.6b185c",
+        "name": "[mqtt publish] <my-app-id>/devices/<dev-id>/down !!!",
+        "topic": "<my-app-id>/devices/<dev-id>/down",
+        "qos": "",
+        "retain": "",
+        "broker": "7cb14d40.1a78c4",
+        "x": 1160,
+        "y": 1080,
+        "wires": []
+    },
+    {
+        "id": "f5730453.e45df8",
+        "type": "link out",
+        "z": "490e650d.6b185c",
+        "name": "To Codec Service, To Location Solver",
+        "links": [
+            "da189ded.e2ddc",
+            "ff201d2f.bf016",
+            "88ffbc99.452ca",
+            "22028fd3.6d5d9",
+            "4c5b4326.05cbcc",
+            "c2754bbe.3f2c48"
+        ],
+        "x": 975,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "8bd9cc19.59365",
+        "type": "comment",
+        "z": "490e650d.6b185c",
+        "name": "TTN Integration Examples",
+        "info": "[TTN http API Reference](https://www.thethingsnetwork.org/docs/applications/http/)\n\n[TTN MQTT API Reference](https://www.thethingsnetwork.org/docs/applications/mqtt/api.html)",
+        "x": 130,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "7cb14d40.1a78c4",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    }
+]

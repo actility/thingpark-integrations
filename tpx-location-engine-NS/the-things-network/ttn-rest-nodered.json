@@ -1,0 +1,344 @@
+[
+    {
+        "id": "8bd9cc19.59365",
+        "type": "comment",
+        "z": "490e650d.6b185c",
+        "name": "TTN Integration Examples",
+        "info": "[TTN http API Reference](https://www.thethingsnetwork.org/docs/applications/http/)\n\n[TTN MQTT API Reference](https://www.thethingsnetwork.org/docs/applications/mqtt/api.html)",
+        "x": 130,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "3e89d059.29a4e",
+        "type": "comment",
+        "z": "490e650d.6b185c",
+        "name": "From NS to Location Solver - REST",
+        "info": "",
+        "x": 200,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "729105da.abad4c",
+        "type": "comment",
+        "z": "490e650d.6b185c",
+        "name": "From Location Solver to NS - REST",
+        "info": "",
+        "x": 200,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "b65cfff4.d1bbc",
+        "type": "http in",
+        "z": "490e650d.6b185c",
+        "name": "",
+        "url": "/uplink_ttn/0001",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 210,
+        "y": 600,
+        "wires": [
+            [
+                "16f10da5.623a72",
+                "5831f1f0.aed8a"
+            ]
+        ]
+    },
+    {
+        "id": "16f10da5.623a72",
+        "type": "http response",
+        "z": "490e650d.6b185c",
+        "name": "http response",
+        "statusCode": "",
+        "headers": {
+            "content-type": "application/json"
+        },
+        "x": 520,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "db61daf7.bd9008",
+        "type": "debug",
+        "z": "490e650d.6b185c",
+        "name": "debug: to Solver",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 800,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "82ae8c9e.f9cbd",
+        "type": "http request",
+        "z": "490e650d.6b185c",
+        "name": "Send UL to Location Solver",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "https://dx-api.thingpark.com/location/latest/api/feeds",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "bearer",
+        "x": 1080,
+        "y": 580,
+        "wires": [
+            [
+                "fa928546.c16d48"
+            ]
+        ]
+    },
+    {
+        "id": "fa928546.c16d48",
+        "type": "debug",
+        "z": "490e650d.6b185c",
+        "name": "debug: Solver response",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "statusCode",
+        "targetType": "msg",
+        "x": 1110,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "cac5a8a.7d18258",
+        "type": "http response",
+        "z": "490e650d.6b185c",
+        "name": "http response",
+        "statusCode": "",
+        "headers": {
+            "content-type": "application/json"
+        },
+        "x": 520,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "888eea36.eccb18",
+        "type": "inject",
+        "z": "490e650d.6b185c",
+        "name": "Sample msg - Loc Solver",
+        "topic": "",
+        "payload": "{\"type\":\"downlink\",\"deveui\":\"20635F0108000496\",\"port\":2,\"payload\":\"030a05\"}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 210,
+        "y": 700,
+        "wires": [
+            [
+                "5e402eb7.16317"
+            ]
+        ]
+    },
+    {
+        "id": "7332aac9.d50bf4",
+        "type": "debug",
+        "z": "490e650d.6b185c",
+        "name": "debug: to NS",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 790,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "5e1b954b.f1354c",
+        "type": "http request",
+        "z": "490e650d.6b185c",
+        "name": "Send DL to TTN NS!!!",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "https://integrations.thethingsnetwork.org/ttn-eu/api/v2/down/node-red-for-tpxle/ttn-node-red?key={{key}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 1060,
+        "y": 720,
+        "wires": [
+            [
+                "4a8a6ccf.fc0124"
+            ]
+        ]
+    },
+    {
+        "id": "4a8a6ccf.fc0124",
+        "type": "debug",
+        "z": "490e650d.6b185c",
+        "name": "debug: NS response",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1100,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "11d25771.efb249",
+        "type": "link out",
+        "z": "490e650d.6b185c",
+        "name": "To Codec Service, To Location Solver",
+        "links": [
+            "da189ded.e2ddc",
+            "ff201d2f.bf016",
+            "88ffbc99.452ca",
+            "22028fd3.6d5d9",
+            "4c5b4326.05cbcc",
+            "c2754bbe.3f2c48"
+        ],
+        "x": 975,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "6d728f9a.decc1",
+        "type": "inject",
+        "z": "490e650d.6b185c",
+        "name": "Sample msg - TTN",
+        "topic": "LoRaWAN_Uplink",
+        "payload": "{\"app_id\":\"my-app-id\",\"dev_id\":\"my-dev-id\",\"hardware_serial\":\"0102030405060708\",\"port\":17,\"counter\":2,\"is_retry\":false,\"confirmed\":false,\"payload_raw\":\"ClD2gwAA\",\"payload_fields\":{},\"metadata\":{\"time\":\"1970-01-01T00:00:00Z\",\"frequency\":868.1,\"modulation\":\"LORA\",\"data_rate\":\"SF7BW125\",\"bit_rate\":50000,\"coding_rate\":\"4/5\",\"gateways\":[{\"gtw_id\":\"ttn-herengracht-ams\",\"timestamp\":12345,\"time\":\"1970-01-01T00:00:00Z\",\"channel\":0,\"rssi\":-25,\"snr\":5,\"rf_chain\":0,\"latitude\":52.1234,\"longitude\":6.1234,\"altitude\":6}],\"latitude\":52.2345,\"longitude\":6.2345,\"altitude\":2},\"downlink_url\":\"https://integrations.thethingsnetwork.org/ttn-eu/api/v2/down/my-app-id/my-process-id?key=ttn-account-v2.secret\"}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 190,
+        "y": 560,
+        "wires": [
+            [
+                "6286968c.29fc38"
+            ]
+        ]
+    },
+    {
+        "id": "6286968c.29fc38",
+        "type": "function",
+        "z": "490e650d.6b185c",
+        "name": "TTN UL interface",
+        "func": "/******************************************/\n/*** TTN UL interface                   ***/\n/******************************************/\n\nbody = (typeof msg.payload == 'string') ? JSON.parse(msg.payload) : msg.payload;\n\nlet feeds = {\n    // deviceEUI: \"\",                                     // mandatory\n    // time: \"\",\n    // coordinates: [],                                   // [longitude, latitude, altitude]\n                                                          // used if NS provides resolved coordinates\n    solverInput: {\n        solverInputType: \"FeedInputForGpsSolver\",\n        // sequenceNumber: 1,                             // LoRaWAN FCntUp\n        // port: 1,                                       // LoRaWAN FPort\n        // receptionTime: \"\",\n        // SF: 12,                                        // LoRaWAN Spreading Factor\n        packets: [\n            // {\n                // baseStationId: \"0805022D\",\n                // antennaId: 0,\n                // antennaCoordinates: [7.0513, 43.6181], // [longitude, latitude, altitude]\n                // antennaHeight: 150,                    // in cm\n                // SNR: 10,                               // in dB\n                // RSSI: -29,                             // in dBm\n                // barometerMeasure: 0,                   // in mB\n                // arrivalSeconds: 1,                     // in seconds\n                // arrivalAdditionalNanos: 7275           // in nanoseconds\n            // }\n        ]\n        // dynamicMotionState: \"string\",    // ['MOVING', 'STATIC', 'UNKNOWN']\n        // temperatureMeasure: 0,           // in Celsius\n        // accelerometerMeasures: [],       // measures per axis, i.e. [x, y, z]\n        // gyroscopeMeasures: [],           // measures per axis, i.e. [roll, pitch, yaw]\n        // barometerMeasure: 0,             // in mBar\n        // lastContext: \"string\"            // Base64 encoded binary solver state\n                                            // with the last calculated position\n    },\n    payload: {\n        deviceProfileId: \"ABEEWAY/MICRO\",   // Currently only Abeeway Microtracker and\n                                            // Industrial Tracker are supported. \"deviceProfileId\"\n                                            // should be set to \"ABEEWAY/MICRO\" for both\n        payloadEncoded: \"\"\n    }\n}\n\nif ('hardware_serial' in body) { \n    feeds.deviceEUI = body.hardware_serial; \n}\nelse { \n    throw new Error(\"Missing property: hardware_serial\"); \n}\n\nif ( ('metadata' in body) && ('time' in body.metadata) ) { \n    feeds.time = body.metadata.time;\n}\n\nif ('counter' in body) { \n    feeds.solverInput.sequenceNumber = body.counter; \n}\nif ('port' in body) { \n    feeds.solverInput.port = body.port \n}\n\nif ('metadata' in body) {\n    if ('time' in body.metadata) { \n        feeds.solverInput.receptionTime = body.metadata.time; \n    }\n    if ('data_rate' in body.metadata) { \n        feeds.solverInput.SF = parseInt(body.metadata.data_rate.substring(2,4)); // SF7BW125\n    }\n    if ( ('gateways' in body.metadata) && Array.isArray(body.metadata.gateways) ) {\n        let gateways = body.metadata.gateways;\n        let packet;\n        for (let i=0; i<gateways.length; i++) {\n            packet = {};\n            if ('gtw_id' in gateways[i]) { \n                packet.baseStationId = gateways[i].gtw_id; \n            } \n            if ('snr'    in gateways[i]) { \n                packet.SNR = gateways[i].snr; \n            }\n            if ('rssi'   in gateways[i]) { \n                packet.RSSI = gateways[i].rssi; \n            }\n            if ( \n                ('longitude' in gateways[i]) && \n                ('latitude' in gateways[i]) \n            ) {\n                packet.antennaCoordinates = [ \n                    gateways[i].longitude,\n                    gateways[i].latitude\n                ];\n                if ('altitude' in gateways[i]) {\n                    packet.antennaCoordinates.push(gateways[i].altitude);\n                }\n            }\n            feeds.solverInput.packets.push(packet);\n        }\n    }\n}\n\nif ('payload_raw' in body) { \n    feeds.payload.payloadEncoded = Buffer.from(body.payload_raw, 'base64').toString('hex'); \n}\n\nmsg.payload = feeds;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 750,
+        "y": 580,
+        "wires": [
+            [
+                "11d25771.efb249",
+                "db61daf7.bd9008",
+                "82ae8c9e.f9cbd"
+            ]
+        ]
+    },
+    {
+        "id": "5e402eb7.16317",
+        "type": "function",
+        "z": "490e650d.6b185c",
+        "name": "TTN DL interface",
+        "func": "/******************************************/\n/*** TTN DL interface              ***/\n/******************************************/\n\n//\n// When you register a device in TTN\n// make sure that dev_id = deveui.toLowerCase() !!!\n//\nmsg.key = \"ttn-account-v2.AOL-P1TwfJVXY_baEAQt-yjcHoKX2VW6Bz4Xr5lys_Y\";\n\nparams = msg.payload;\nmsg.payload = {\n    \"dev_id\": params.deveui.toLowerCase(),\n    \"port\": params.port,\n    \"confirmed\": false,\n    \"payload_raw\": Buffer.from(params.payload, 'hex').toString('base64')\n};\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 750,
+        "y": 720,
+        "wires": [
+            [
+                "7332aac9.d50bf4",
+                "5e1b954b.f1354c"
+            ]
+        ]
+    },
+    {
+        "id": "3382c45d.615a6c",
+        "type": "http in",
+        "z": "490e650d.6b185c",
+        "name": "",
+        "url": "/downlink_ttn/0001",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 220,
+        "y": 740,
+        "wires": [
+            [
+                "5e402eb7.16317",
+                "cac5a8a.7d18258",
+                "5f41d4ab.f9423c"
+            ]
+        ]
+    },
+    {
+        "id": "5f41d4ab.f9423c",
+        "type": "debug",
+        "z": "490e650d.6b185c",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 510,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "5831f1f0.aed8a",
+        "type": "change",
+        "z": "490e650d.6b185c",
+        "name": "add gw loc",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.metadata.gateways[0].longitude",
+                "pt": "msg",
+                "to": "18.441839",
+                "tot": "num"
+            },
+            {
+                "t": "set",
+                "p": "payload.metadata.gateways[0].latitude",
+                "pt": "msg",
+                "to": "46.225631",
+                "tot": "num"
+            },
+            {
+                "t": "set",
+                "p": "payload.metadata.gateways[0].altitude",
+                "pt": "msg",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 470,
+        "y": 540,
+        "wires": [
+            [
+                "6286968c.29fc38"
+            ]
+        ]
+    }
+]
