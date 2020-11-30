@@ -6,7 +6,6 @@ Most of the examples are in the form of Node-RED flows. In order to try them you
 For more information on how to install a Nore-RED and import flows read our [Node-RED quick-start guide](./Node-RED-quick-start.md).
 
 The folders of this repository are organized as follows:
-The source code of flows are collected in the following folders of this repository:
 
 - [ThingParkLocationSolver-AS](./ThingParkLocationSolver-AS)  
   Example code samples and flows to connect TPX Location Engine to an Application Server
