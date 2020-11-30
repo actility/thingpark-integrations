@@ -1,6 +1,6 @@
 # Set up your Node RED connector
 
-Set up your Node RED server and App as it is described in the root of this repo [here](https://github.com/actility/thingpark-integrations/blob/main/Node-RED-quick-start.md).  
+Set up your Node RED server and App as it is described here](/tree/main/Node-RED-quick-start.md).  
 You can find example app configuration files (in JSON format) in this folder.
 
 # Route your device messages from TTN to your Node-RED application
