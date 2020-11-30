@@ -8,9 +8,12 @@ There are 2 integration options:
   The example flow of this option is in the [ttn-rest-nodere.json](./ttn-rest-nodered.json) file.
 - Integration with MQTT  
   The example flow of this option is in the [ttn-mqtt-nodere.json](./ttn-mqtt-nodered.json) file.  
-   Please note that MQTT requires an messages broker too:
+   Please note that MQTT requires a messages broker too:
   - TTN NS publishes messages to a topic of the Message Broker
   - The Node-RED demo server will subscribe to that messages and forward them to ThingPark X Location Engine
+    In the MQTT example flows we assumed that the message broker is installed on the same machine as the Node-RED server. You can update the MQTT parameters (url, credentials etc.) by editing the pink [mqtt subscribe] and [mqtt publish] nodes through the Node-RED GUI.
+
+Both integration options have 2 flows: an uplink flow and a downlink flow.
 
 # Route your device messages from TTN to your Node-RED application
 
