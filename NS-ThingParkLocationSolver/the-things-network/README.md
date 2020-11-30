@@ -5,9 +5,9 @@ You can find example app configuration files (in JSON format) in this folder.
 There are 2 integration options:
 
 - Integration with a REST API  
-  The example flow of this option is in the [ttn-rest-nodere.json](./ttn-rest-nodere.json) file.
+  The example flow of this option is in the [ttn-rest-nodere.json](./ttn-rest-nodered.json) file.
 - Integration with MQTT  
-  The example flow of this option is in the [ttn-mqtt-nodere.json](./ttn-mqtt-nodere.json) file.  
+  The example flow of this option is in the [ttn-mqtt-nodere.json](./ttn-mqtt-nodered.json) file.  
    Please note that MQTT requires an messages broker too:
   - TTN NS publishes messages to a topic of the Message Broker
   - The Node-RED demo server will subscribe to that messages and forward them to ThingPark X Location Engine
