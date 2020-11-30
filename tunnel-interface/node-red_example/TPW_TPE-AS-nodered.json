@@ -1,0 +1,94 @@
+[
+    {
+        "id": "d3d15ac2.f0d8f8",
+        "type": "comment",
+        "z": "d57c4db3.61669",
+        "name": "From ThingPark Wireless/Enterprise",
+        "info": "",
+        "x": 200,
+        "y": 1320,
+        "wires": []
+    },
+    {
+        "id": "32693d4a.6fed02",
+        "type": "http in",
+        "z": "d57c4db3.61669",
+        "name": "",
+        "url": "/uplink_actility",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 220,
+        "y": 1440,
+        "wires": [
+            [
+                "3cbee653.e3f1ca",
+                "2250ec59.ec0f54"
+            ]
+        ]
+    },
+    {
+        "id": "3cbee653.e3f1ca",
+        "type": "http response",
+        "z": "d57c4db3.61669",
+        "name": "http response",
+        "statusCode": "",
+        "headers": {
+            "content-type": "application/json"
+        },
+        "x": 480,
+        "y": 1500,
+        "wires": []
+    },
+    {
+        "id": "2250ec59.ec0f54",
+        "type": "function",
+        "z": "d57c4db3.61669",
+        "name": "Actility UL interface",
+        "func": "/******************************************/\n/*** Actility UL interface              ***/\n/******************************************/\n\nbody = (typeof msg.payload == 'string') ? JSON.parse(msg.payload) : msg.payload;\n\n/* Do something with the POST body, and forward it to the next node in the flow */\n\nmsg.payload = body;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 670,
+        "y": 1440,
+        "wires": [
+            [
+                "16937fc0.e8a18"
+            ]
+        ]
+    },
+    {
+        "id": "eb3c6deb.b994c",
+        "type": "inject",
+        "z": "d57c4db3.61669",
+        "name": "Sample msg - Actility",
+        "topic": "",
+        "payload": "{\"DevEUI_uplink\":{\"Time\":\"2020-01-01T21:53:13.780+01:00\",\"DevEUI\":\"20635F0108000496\",\"FPort\":17,\"FCntUp\":16,\"ADRbit\":1,\"MType\":2,\"FCntDn\":6,\"payload_hex\":\"0a50f6830000\",\"mic_hex\":\"d80954bb\",\"Lrcid\":\"00000211\",\"LrrRSSI\":-52,\"LrrSNR\":11.5,\"SpFact\":9,\"SubBand\":\"G2\",\"Channel\":\"LC4\",\"DevLrrCnt\":1,\"Lrrid\":\"100003ED\",\"Late\":0,\"LrrLAT\":47.466702,\"LrrLON\":19.047592,\"Lrrs\":{\"Lrr\":[{\"Lrrid\":\"100003ED\",\"Chain\":0,\"LrrRSSI\":-52,\"LrrSNR\":11.5,\"LrrESP\":-52.297062}]},\"CustomerID\":\"100040803\",\"CustomerData\":{\"alr\":{\"pro\":\"ABEE/APY\",\"ver\":\"1\"}},\"ModelCfg\":\"0\",\"InstantPER\":0,\"MeanPER\":0,\"DevAddr\":\"05AE3D2F\",\"TxPower\":9.75,\"NbTrans\":1}}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 210,
+        "y": 1380,
+        "wires": [
+            [
+                "2250ec59.ec0f54"
+            ]
+        ]
+    },
+    {
+        "id": "16937fc0.e8a18",
+        "type": "debug",
+        "z": "d57c4db3.61669",
+        "name": "debug: Received from Thingpark",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 950,
+        "y": 1440,
+        "wires": []
+    }
+]
