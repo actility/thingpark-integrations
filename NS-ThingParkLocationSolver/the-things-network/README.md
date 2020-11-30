@@ -2,19 +2,15 @@
 
 Set up your Node RED server and App as it is described [here](/Node-RED-quick-start.md).  
 You can find example app configuration files (in JSON format) in this folder.  
-There are 2 integration options:
+There are 2 integration options and both have 2 flows: an uplink flow and a downlink flow.
 
-- Integration with a REST API  
-  The example flow of this option is in the [ttn-rest-nodere.json](./ttn-rest-nodered.json) file.
-- Integration with MQTT  
-  The example flow of this option is in the [ttn-mqtt-nodere.json](./ttn-mqtt-nodered.json) file.  
-   Please note that MQTT requires a messages broker too:
-  - TTN NS publishes messages to a topic of the Message Broker
-  - The Node-RED demo server will subscribe to that messages and forward them to ThingPark X Location Engine  
-
-  In the MQTT example flows we assumed that the message broker is installed on the same machine as the Node-RED server. You can update the MQTT parameters (url, credentials etc.) by editing the pink [mqtt subscribe] and [mqtt publish] nodes through the Node-RED GUI.
-
-Both integration options have 2 flows: an uplink flow and a downlink flow.
+1. Integration with a REST API  
+   The example flow of this option is in the [ttn-rest-nodere.json](./ttn-rest-nodered.json) file.  
+   In order to allow Node-RED to send (forward) downlink messages to TTN NS, you need to use an access key that can be set by editing the code (msg.key) of "TTN DL Interface" node in the Node-RED GUI.
+2. Integration with MQTT  
+    The example flow of this option is in the [ttn-mqtt-nodere.json](./ttn-mqtt-nodered.json) file.  
+    Please note that MQTT requires a messages broker too: - TTN NS publishes messages to a topic of the Message Broker - The Node-RED demo server will subscribe to that messages and forward them to ThingPark X Location Engine
+   In the MQTT example flows we assumed that the message broker is installed on the same machine as the Node-RED server. You can update the MQTT parameters (url, credentials etc.) by editing the pink [mqtt subscribe] and [mqtt publish] nodes through the Node-RED GUI.
 
 # Route your device messages from TTN to your Node-RED application
 
