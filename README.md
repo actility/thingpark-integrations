@@ -11,7 +11,6 @@ The folders of this repository are organized as follows:
   Example code samples and flows to connect TPX Location Engine to an Application Server
 - [NS-ThingParkLocationSolverS](./NS-ThingParkLocationSolver)  
   Example code samples and flows to connect a LoRaWAN Network Server to TPX Location Engine
-  - [Actility](./NS-ThingParkLocationSolver/actility)
   - [Kerlink](./NS-ThingParkLocationSolver/kerlink)
   - [Loriot](./NS-ThingParkLocationSolver/loriot)
   - [Multitech](./NS-ThingParkLocationSolver/multitech)
