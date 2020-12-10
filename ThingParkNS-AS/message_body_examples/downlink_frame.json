@@ -1,0 +1,11 @@
+{
+    "DevEUI_downlink": {
+        "Time": "2018-10-17T15:38:46.882+02:00",
+        "DevEUI": "0018B20000000B20",
+        "FPort": "8",
+        "payload_hex": "9e1c4852512000220020e3831071",
+        "Confirmed": "1",
+        "ValidityTime": "2018-10-17T16:38:46.882+02:00",
+        "FlushDownlinkQueue": "1"
+    }
+}

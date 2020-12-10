@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DevEUI_notification xmlns="http://uri.actility.com/lora">
+	<Time>2019-01-15T11:31:19.588+02:00</Time>
+	<DevEUI>F03D291E001001C9</DevEUI>
+	<Lrcid>00000602</Lrcid>
+	<DevAddr>007E074F</DevAddr>
+	<Type>reset</Type>
+	<Var1>admin_reset</Var1>
+	<CustomerID>100000507</CustomerID>
+	<FCntDn>0</FCntDn>
+</DevEUI_notification>
