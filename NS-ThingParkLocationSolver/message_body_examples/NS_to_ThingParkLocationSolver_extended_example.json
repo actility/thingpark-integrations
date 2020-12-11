@@ -1,0 +1,6 @@
+{
+    "type": "downlink",
+    "deveui": "20635F0108000496",
+    "port": 12,
+    "payload": "AABBCC"
+}

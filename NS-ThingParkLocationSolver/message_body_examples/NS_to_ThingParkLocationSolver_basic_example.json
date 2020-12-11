@@ -1,0 +1,25 @@
+{
+    "deviceEUI": "20635F0108000496",
+    "time": "2020-01-01T21:53:13.780+01:00",
+    "solverInput": {
+        "solverInputType": "FeedInputForGenericSolver",
+        "sequenceNumber": 16,
+        "port": 17,
+
+        "receptionTime": "2020-01-01T21:53:13.780+01:00",
+        "SF": 9,
+        "packets": [
+            {
+                "baseStationId": "100003ED",
+                "SNR": 11.5,
+                "RSSI": -52,
+                "antennaCoordinates": [ 19.047592, 47.466702 ]
+            }
+        ]
+    
+    },
+    "payload": {
+        "deviceProfileId": "ABEEWAY/MICRO",
+        "payloadEncoded": "0a50f6830000"
+    }
+}

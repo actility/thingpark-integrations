@@ -1,0 +1,7 @@
+{
+    "deviceEUI": "20635F0102001734",
+    "deviceProfileId": "ABEEWAY/MICRO",
+    "trackerCommandType": "TrackerCommandToChangeParam",
+    "paramName": "TRACKING_UL_PERIOD",
+    "paramValue":  12
+}

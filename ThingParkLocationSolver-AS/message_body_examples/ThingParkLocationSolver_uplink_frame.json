@@ -1,0 +1,150 @@
+{
+    "age": 208,
+    "coordinates": [
+        18.926466299999998,
+        47.4383483,
+        0
+    ],
+    "customerId": "100132838",
+    "deviceEUI": "20635F0108000496",
+    "dxProfileId": "community-api",
+    "horizontalAccuracy": 123,
+    "modelCfg": "1:TWA_100132838.14305.AS",
+    "processedFeed": {
+        "deviceProfileId": "ABEEWAY/MICRO",
+        "dynamicMotionState": "STATIC",
+        "payloadEncoded": "0328f482191ad85d4c9f793ad14ad24f32f5c7bf48d24f32f3c6bf488f5a04179cbe",
+        "port": 17,
+        "processedPacket": {
+            "antennaCoordinates": [
+                18.441601,
+                46.226971
+            ],
+            "baseStationId": "10000210",
+            "RSSI": -63,
+            "SNR": 9.25
+        },
+        "receptionTime": "2020-11-23T18:06:19.163Z",
+        "sequenceNumber": 5616,
+        "SF": 10,
+        "temperatureMeasure": 21.764706
+    },
+    "rawPosition": {
+        "age": 208,
+        "bssidCount": 4,
+        "coordinates": [
+            18.926466299999998,
+            47.4383483,
+            null
+        ],
+        "rawPositionType": "RawPositionByWifiSolver",
+        "wifiBssids": [
+            {
+                "bssid": "D8:5D:4C:9F:79:3A",
+                "rssi": -47
+            },
+            {
+                "bssid": "4A:D2:4F:32:F5:C7",
+                "rssi": -65
+            },
+            {
+                "bssid": "48:D2:4F:32:F3:C6",
+                "rssi": -65
+            },
+            {
+                "bssid": "48:8F:5A:04:17:9C",
+                "rssi": -66
+            }
+        ]
+    },
+    "resolvedTracker": {
+        "activityCount": -1,
+        "batteryCapacity": -1,
+        "batteryLevel": 100,
+        "batteryStatus": "OPERATING",
+        "bleBeaconCount": -1,
+        "bleBeaconTimeout": -1,
+        "bleBond": "UNKNOWN",
+        "bleFirmwareVersion": "2.0.0",
+        "bleRssiFilter": -1,
+        "collectionBLEFilterMain1": -1,
+        "collectionBLEFilterMain2": -1,
+        "collectionBLEFilterSecMask": -1,
+        "collectionBLEFilterSecValue": -1,
+        "collectionBLEFilterType": "UNKNOWN",
+        "collectionNbEntry": -1,
+        "collectionScanType": "UNKNOWN",
+        "confirmedUlBitmap": -1,
+        "confirmedUlRetry": -1,
+        "energyStatusPeriod": -1,
+        "eventType": "UNKNOWN",
+        "extAntennaProfile": "UNKNOWN",
+        "firmwareVersion": "1.9.1",
+        "geolocSensorProfile": "UNKNOWN",
+        "gpsConvergence": -1,
+        "gpsEHPE": -1,
+        "gpsScanMode": "UNKNOWN",
+        "gpsStandbyTimeout": -1,
+        "gpsTimeout": -1,
+        "loralivePeriod": -1,
+        "messageType": "POSITION_MESSAGE",
+        "motionDuration": -1,
+        "motionSensitivity": -1,
+        "motionStartEndNbTx": -1,
+        "networkTimeoutCheck": -1,
+        "networkTimeoutReset": -1,
+        "oneshotGeolocMethod": "UNKNOWN",
+        "periodicActivityPeriod": -1,
+        "periodicPositionInterval": -1,
+        "reedSwitchConfiguration": "UNKNOWN",
+        "sensorMode": "UNKNOWN",
+        "shockDetection": -1,
+        "shutdownCause": "UNKNOWN",
+        "sosFlag": false,
+        "temperatureAction": "UNKNOWN",
+        "temperatureHigh": -1,
+        "temperatureLow": -1,
+        "trackingMode": "MOTION_TRACKING",
+        "trackingUlPeriod": -1,
+        "transmitStrat": "UNKNOWN",
+        "xgpsTimeout": -1
+    },
+    "time": "2020-11-23T18:06:19.163Z",
+    "uplinkPayload": {
+        "ackToken": 1,
+        "age": 208,
+        "appState": 1,
+        "batteryVoltage": 4.14,
+        "deviceConfiguration": {
+            "mode": "MOTION_TRACKING"
+        },
+        "dynamicMotionState": "STATIC",
+        "messageType": "POSITION_MESSAGE",
+        "onDemand": false,
+        "payload": "0328f482191ad85d4c9f793ad14ad24f32f5c7bf48d24f32f3c6bf488f5a04179cbe",
+        "periodicPosition": false,
+        "rawPositionType": "WIFI_BSSIDS_WITH_NO_CYPHER",
+        "sosFlag": 0,
+        "temperatureMeasure": 21.8,
+        "trackingMode": "MOTION_TRACKING",
+        "wifiBssids": [
+            {
+                "bssid": "d8:5d:4c:9f:79:3a",
+                "rssi": -47
+            },
+            {
+                "bssid": "4a:d2:4f:32:f5:c7",
+                "rssi": -65
+            },
+            {
+                "bssid": "48:d2:4f:32:f3:c6",
+                "rssi": -65
+            },
+            {
+                "bssid": "48:8f:5a:04:17:9c",
+                "rssi": -66
+            }
+        ]
+    },
+    "validityState": "NEW"
+}

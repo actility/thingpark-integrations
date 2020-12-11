@@ -1,0 +1,6 @@
+{
+    "deviceEUI": "20635F0102001734",
+    "deviceProfileId": "ABEEWAY/MICRO",
+    "trackerCommandType": "TrackerCommandToChangeMode",
+    "newMode": "MOTION_TRACKING"
+}
