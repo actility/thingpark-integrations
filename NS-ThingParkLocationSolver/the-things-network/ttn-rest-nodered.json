@@ -1,36 +1,36 @@
 [
     {
-        "id": "7c0e7057.92131",
+        "id": "70bd9bda.3a2624",
         "type": "comment",
         "z": "d57c4db3.61669",
         "name": "TTN Integration Examples",
         "info": "[TTN http API Reference](https://www.thethingsnetwork.org/docs/applications/http/)\n\n[TTN MQTT API Reference](https://www.thethingsnetwork.org/docs/applications/mqtt/api.html)",
-        "x": 330,
-        "y": 2280,
+        "x": 370,
+        "y": 2200,
         "wires": []
     },
     {
-        "id": "5edca9b1.a280b8",
+        "id": "a1aedc6c.5aaa6",
         "type": "comment",
         "z": "d57c4db3.61669",
         "name": "From NS to Location Solver - REST",
         "info": "",
-        "x": 400,
-        "y": 2340,
+        "x": 440,
+        "y": 2260,
         "wires": []
     },
     {
-        "id": "d45a85ed.3c4058",
+        "id": "4a9fed37.cee454",
         "type": "comment",
         "z": "d57c4db3.61669",
         "name": "From Location Solver to NS - REST",
         "info": "",
-        "x": 400,
-        "y": 2480,
+        "x": 440,
+        "y": 2400,
         "wires": []
     },
     {
-        "id": "e65850d9.d61b9",
+        "id": "cdb0224d.351d1",
         "type": "http in",
         "z": "d57c4db3.61669",
         "name": "",
@@ -38,17 +38,17 @@
         "method": "post",
         "upload": false,
         "swaggerDoc": "",
-        "x": 410,
-        "y": 2420,
+        "x": 450,
+        "y": 2340,
         "wires": [
             [
-                "f109b186.25f16",
-                "2b464e38.322432"
+                "452a1b84.c60494",
+                "24dfd7c6.a133d8"
             ]
         ]
     },
     {
-        "id": "f109b186.25f16",
+        "id": "452a1b84.c60494",
         "type": "http response",
         "z": "d57c4db3.61669",
         "name": "http response",
@@ -56,12 +56,12 @@
         "headers": {
             "content-type": "application/json"
         },
-        "x": 720,
-        "y": 2440,
+        "x": 760,
+        "y": 2360,
         "wires": []
     },
     {
-        "id": "35ecaa46.449466",
+        "id": "b57daa7c.1a3228",
         "type": "debug",
         "z": "d57c4db3.61669",
         "name": "debug: to Solver",
@@ -71,12 +71,12 @@
         "tostatus": false,
         "complete": "payload",
         "targetType": "msg",
-        "x": 1000,
-        "y": 2360,
+        "x": 1040,
+        "y": 2280,
         "wires": []
     },
     {
-        "id": "a9807edb.208e4",
+        "id": "deb2425d.ec65",
         "type": "http request",
         "z": "d57c4db3.61669",
         "name": "Send UL to Location Solver",
@@ -88,16 +88,16 @@
         "persist": false,
         "proxy": "",
         "authType": "bearer",
-        "x": 1280,
-        "y": 2400,
+        "x": 1320,
+        "y": 2320,
         "wires": [
             [
-                "b7b7b257.fe99f"
+                "58e97466.f469ac"
             ]
         ]
     },
     {
-        "id": "b7b7b257.fe99f",
+        "id": "58e97466.f469ac",
         "type": "debug",
         "z": "d57c4db3.61669",
         "name": "debug: Solver response",
@@ -107,12 +107,12 @@
         "tostatus": false,
         "complete": "statusCode",
         "targetType": "msg",
-        "x": 1310,
-        "y": 2360,
+        "x": 1350,
+        "y": 2280,
         "wires": []
     },
     {
-        "id": "51dc74a0.8591cc",
+        "id": "5ab039ba.7be938",
         "type": "http response",
         "z": "d57c4db3.61669",
         "name": "http response",
@@ -120,12 +120,12 @@
         "headers": {
             "content-type": "application/json"
         },
-        "x": 720,
-        "y": 2580,
+        "x": 760,
+        "y": 2500,
         "wires": []
     },
     {
-        "id": "9aac1ef9.f4aa",
+        "id": "cdd7d79f.4f5f18",
         "type": "inject",
         "z": "d57c4db3.61669",
         "name": "Sample msg - Loc Solver",
@@ -136,16 +136,16 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 410,
-        "y": 2520,
+        "x": 450,
+        "y": 2440,
         "wires": [
             [
-                "c3938457.a03b48"
+                "87535840.81d078"
             ]
         ]
     },
     {
-        "id": "dc78ae2e.34caf",
+        "id": "119f610e.dfe9ef",
         "type": "debug",
         "z": "d57c4db3.61669",
         "name": "debug: to NS",
@@ -155,12 +155,12 @@
         "tostatus": false,
         "complete": "true",
         "targetType": "full",
-        "x": 990,
-        "y": 2500,
+        "x": 1030,
+        "y": 2420,
         "wires": []
     },
     {
-        "id": "5b3d2e3c.783e3",
+        "id": "218b47fc.65b348",
         "type": "http request",
         "z": "d57c4db3.61669",
         "name": "Send DL to TTN NS!!!",
@@ -172,16 +172,16 @@
         "persist": false,
         "proxy": "",
         "authType": "",
-        "x": 1260,
-        "y": 2540,
+        "x": 1300,
+        "y": 2460,
         "wires": [
             [
-                "ba65527a.86be6"
+                "45b4f0eb.fbe74"
             ]
         ]
     },
     {
-        "id": "ba65527a.86be6",
+        "id": "45b4f0eb.fbe74",
         "type": "debug",
         "z": "d57c4db3.61669",
         "name": "debug: NS response",
@@ -191,12 +191,12 @@
         "tostatus": false,
         "complete": "true",
         "targetType": "full",
-        "x": 1300,
-        "y": 2500,
+        "x": 1340,
+        "y": 2420,
         "wires": []
     },
     {
-        "id": "c3645915.57c6a8",
+        "id": "83884dcf.ec095",
         "type": "inject",
         "z": "d57c4db3.61669",
         "name": "Sample msg - TTN",
@@ -207,50 +207,50 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 390,
-        "y": 2380,
+        "x": 430,
+        "y": 2300,
         "wires": [
             [
-                "2b464e38.322432"
+                "24dfd7c6.a133d8"
             ]
         ]
     },
     {
-        "id": "2b464e38.322432",
+        "id": "24dfd7c6.a133d8",
         "type": "function",
         "z": "d57c4db3.61669",
         "name": "TTN UL interface",
         "func": "/******************************************/\n/*** TTN UL interface                   ***/\n/******************************************/\n\nbody = (typeof msg.payload == 'string') ? JSON.parse(msg.payload) : msg.payload;\n\nlet feeds = {\n    // deviceEUI: \"\",                                     // mandatory\n    // time: \"\",\n    // coordinates: [],                                   // [longitude, latitude, altitude]\n                                                          // used if NS provides resolved coordinates\n    solverInput: {\n        solverInputType: \"FeedInputForGpsSolver\",\n        // sequenceNumber: 1,                             // LoRaWAN FCntUp\n        // port: 1,                                       // LoRaWAN FPort\n        // receptionTime: \"\",\n        // SF: 12,                                        // LoRaWAN Spreading Factor\n        packets: [\n            // {\n                // baseStationId: \"0805022D\",\n                // antennaId: 0,\n                // antennaCoordinates: [7.0513, 43.6181], // [longitude, latitude, altitude]\n                // antennaHeight: 150,                    // in cm\n                // SNR: 10,                               // in dB\n                // RSSI: -29,                             // in dBm\n                // barometerMeasure: 0,                   // in mB\n                // arrivalSeconds: 1,                     // in seconds\n                // arrivalAdditionalNanos: 7275           // in nanoseconds\n            // }\n        ]\n        // dynamicMotionState: \"string\",    // ['MOVING', 'STATIC', 'UNKNOWN']\n        // temperatureMeasure: 0,           // in Celsius\n        // accelerometerMeasures: [],       // measures per axis, i.e. [x, y, z]\n        // gyroscopeMeasures: [],           // measures per axis, i.e. [roll, pitch, yaw]\n        // barometerMeasure: 0,             // in mBar\n        // lastContext: \"string\"            // Base64 encoded binary solver state\n                                            // with the last calculated position\n    },\n    payload: {\n        deviceProfileId: \"ABEEWAY/MICRO\",   // Currently only Abeeway Microtracker and\n                                            // Industrial Tracker are supported. \"deviceProfileId\"\n                                            // should be set to \"ABEEWAY/MICRO\" for both\n        payloadEncoded: \"\"\n    }\n}\n\nif ('hardware_serial' in body) { \n    feeds.deviceEUI = body.hardware_serial; \n}\nelse { \n    throw new Error(\"Missing property: hardware_serial\"); \n}\n\nif ( ('metadata' in body) && ('time' in body.metadata) ) { \n    feeds.time = body.metadata.time;\n}\n\nif ('counter' in body) { \n    feeds.solverInput.sequenceNumber = body.counter; \n}\nif ('port' in body) { \n    feeds.solverInput.port = body.port \n}\n\nif ('metadata' in body) {\n    if ('time' in body.metadata) { \n        feeds.solverInput.receptionTime = body.metadata.time; \n    }\n    if ('data_rate' in body.metadata) { \n        feeds.solverInput.SF = parseInt(body.metadata.data_rate.substring(2,4)); // SF7BW125\n    }\n    if ( ('gateways' in body.metadata) && Array.isArray(body.metadata.gateways) ) {\n        let gateways = body.metadata.gateways;\n        let packet;\n        for (let i=0; i<gateways.length; i++) {\n            packet = {};\n            if ('gtw_id' in gateways[i]) { \n                packet.baseStationId = gateways[i].gtw_id; \n            } \n            if ('snr'    in gateways[i]) { \n                packet.SNR = gateways[i].snr; \n            }\n            if ('rssi'   in gateways[i]) { \n                packet.RSSI = gateways[i].rssi; \n            }\n            if ( \n                ('longitude' in gateways[i]) && \n                ('latitude' in gateways[i]) \n            ) {\n                packet.antennaCoordinates = [ \n                    gateways[i].longitude,\n                    gateways[i].latitude\n                ];\n                if ('altitude' in gateways[i]) {\n                    packet.antennaCoordinates.push(gateways[i].altitude);\n                }\n            }\n            feeds.solverInput.packets.push(packet);\n        }\n    }\n}\n\nif ('payload_raw' in body) { \n    feeds.payload.payloadEncoded = Buffer.from(body.payload_raw, 'base64').toString('hex'); \n}\n\nmsg.payload = feeds;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 950,
-        "y": 2400,
+        "x": 990,
+        "y": 2320,
         "wires": [
             [
-                "35ecaa46.449466",
-                "a9807edb.208e4"
+                "b57daa7c.1a3228",
+                "deb2425d.ec65"
             ]
         ]
     },
     {
-        "id": "c3938457.a03b48",
+        "id": "87535840.81d078",
         "type": "function",
         "z": "d57c4db3.61669",
         "name": "TTN DL interface",
         "func": "/******************************************/\n/*** TTN DL interface              ***/\n/******************************************/\n\n//\n// When you register a device in TTN\n// make sure that dev_id = deveui.toLowerCase() !!!\n//\nmsg.key = \"ttn-account-v2.AOL-P1TwfJVXY_baEAQt-yjcHoKX2VW6Bz4Xr5lys_Y\";\n\nparams = msg.payload;\nmsg.payload = {\n    \"dev_id\": params.deveui.toLowerCase(),\n    \"port\": params.port,\n    \"confirmed\": false,\n    \"payload_raw\": Buffer.from(params.payload, 'hex').toString('base64')\n};\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
-        "x": 950,
-        "y": 2540,
+        "x": 990,
+        "y": 2460,
         "wires": [
             [
-                "dc78ae2e.34caf",
-                "5b3d2e3c.783e3"
+                "119f610e.dfe9ef",
+                "218b47fc.65b348"
             ]
         ]
     },
     {
-        "id": "e6cd121c.4a8b3",
+        "id": "43a7b5c1.132f8c",
         "type": "http in",
         "z": "d57c4db3.61669",
         "name": "",
@@ -258,28 +258,13 @@
         "method": "post",
         "upload": false,
         "swaggerDoc": "",
-        "x": 420,
-        "y": 2560,
+        "x": 460,
+        "y": 2480,
         "wires": [
             [
-                "c3938457.a03b48",
-                "51dc74a0.8591cc",
-                "7a431abe.c0f9a4"
+                "87535840.81d078",
+                "5ab039ba.7be938"
             ]
         ]
-    },
-    {
-        "id": "7a431abe.c0f9a4",
-        "type": "debug",
-        "z": "d57c4db3.61669",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "x": 710,
-        "y": 2620,
-        "wires": []
     }
 ]
