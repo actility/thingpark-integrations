@@ -27,3 +27,4 @@
    between the AS and the NS as defined in the Generic Application configuration.
 
 5. The AS compares the calculated Token with the received token (in the query string). If the two are not the same the AS drops the uplink frame.
+6. 
