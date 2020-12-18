@@ -1,5 +1,5 @@
 
-[test](#tpns-as-interface)
+[test](#asdf)
 
 # Thingpark Integrations
 
@@ -48,7 +48,7 @@ different protocols. Two of them (HTTP and MQTT) are discribed in the 'Interface
 <img src="images/NS-NIT-tpLS-AS.png" alt="NS-NIT-tpLS-AS" style="height: 600px; display:block; margin:auto"/>
 <br/>
 
-## 2 Integration Interfaces {#tpns-as-interface}
+## 2 Integration Interfaces
 ### 2.1 The tpNS-AS interface
 
 #### 2.1.1 Introduction
@@ -58,6 +58,7 @@ or ThingPark Wireless LoRaWAN network servers with external Application Servers.
 Regardless of the applied integration option (http, mqtt, websocket, etc.) the message bodies are always text 
 documents in either JSON or XML format.
 
+[](){#asdf}
 #### 2.1.2 Message types
 ThingPark Network Server (tpNS) sends/receives the following types of messages to/from the application server (AS):
 
