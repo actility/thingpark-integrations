@@ -20,7 +20,7 @@ This document explains how to set up a lab environment for testing the unique fe
 
 These components are also presented on Figure 1 below. Blue color represents components from Actility and Abeeway, orange color represents componets that we plan to develop ourselves and white components are from 3rd parties.
 
-![Fig01](Fig01.png)
+![Fig01](images/Fig01.png)
 _Figure 1. - The components of the planned test environment_
 
 
