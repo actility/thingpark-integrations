@@ -48,7 +48,7 @@ different protocols. Two of them (HTTP and MQTT) are discribed in the 'Interface
 
 ## 2 Integration Interfaces
 
-<a name='tpns-as-interface' href='#'></a>
+<a name='tpns-as-interface' href='#tpns-as-interface'>tpns-as-interface</a>
 ### 2.1 The tpNS-AS interface
 
 #### 2.1.1 Introduction
