@@ -1,4 +1,6 @@
 
+[test](#tpns-as-interface)
+
 # Thingpark Integrations
 
 ## 1. Introduction
@@ -46,9 +48,7 @@ different protocols. Two of them (HTTP and MQTT) are discribed in the 'Interface
 <img src="images/NS-NIT-tpLS-AS.png" alt="NS-NIT-tpLS-AS" style="height: 600px; display:block; margin:auto"/>
 <br/>
 
-## 2 Integration Interfaces
-
-<a name='tpns-as-interface' href='#tpns-as-interface'>tpns-as-interface</a>
+## 2 Integration Interfaces {#tpns-as-interface}
 ### 2.1 The tpNS-AS interface
 
 #### 2.1.1 Introduction
