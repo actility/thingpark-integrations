@@ -7,16 +7,16 @@ For more information on how to install a Nore-RED and import flows read our [Nod
 
 The folders of this repository are organized as follows:
 
-- [tpLS-AS](./tpLS-AS)  
+- [tpLS-AS](./tpLS-AS/README.md)  
   Example code samples and flows to connect ThingPark Location Solver (tpLS) to an Application Server (AS)
-- [NS-NIT-tpLS](./NS-NIT-tpLS)  
+- [NS-NIT-tpLS](./NS-NIT-tpLS/README.md)  
   Example code samples and flows to connect different 3rd party Network Servers (NS) to ThingPark Location Solver 
   (tpLS) through a Network Interface Translator (NIT) application. Node-RED samples for NIT deployment are 
   available for the following 3rd party network servers under the hyperlinks:
-  - [Kerlink](./NS-NIT-tpLS/kerlink)
-  - [Loriot](./NS-NIT-tpLS/loriot)
-  - [Multitech](./NS-NIT-tpLS/multitech)
-  - [Senet](./NS-NIT-tpLS/senet)
-  - [The Things Network](./NS-NIT-tpLS/the-things-network)
-- [ThingParkNS-AS](./tpNS-AS)  
+  - [Kerlink](./NS-NIT-tpLS/kerlink/README.md)
+  - [Loriot](./NS-NIT-tpLS/loriot/README.md)
+  - [Multitech](./NS-NIT-tpLS/multitech/README.md)
+  - [Senet](./NS-NIT-tpLS/senet/README.md)
+  - [The Things Network](./NS-NIT-tpLS/the-things-network/README.md)
+- [tpNS-AS](./tpNS-AS/README.md)  
   Example code samples and flows to connect ThingPark Wireless/Enterprise Network Server to an Application Server
