@@ -1,24 +1,20 @@
 # ThingPark Integrations
 
-This repository includes example code samples that demonstrate how to integrate Actility ThingPark components with 3rd party systems. 
+This repository includes example code samples and documentation that helps developers to integrate Actility ThingPark 
+components with 3rd party systems. Before checking the code samples please review the project documentation [here](./docs/README.md).
 
-A general overview of the integration architecture is described [here](./3rdPtyNS_integration.md).
+The folders are organized as follows:
 
-Most of the examples are in the form of Node-RED flows. In order to try them you need a Node-RED server that you can install either on your own machine locally or use it on IBM Cloud.  
-For more information on how to install a Nore-RED and import flows read our [Node-RED quick-start guide](./Node-RED-quick-start.md).
+- [1_tpNS-AS](./1_tpNS-AS/README.md)  
+  Example code samples to connect ThingPark Wireless/Enterprise Network Server to an Application Server
 
-The folders of this repository are organized as follows:
+- [2_tpLS-AS](./2_tpLS-AS/README.md)  
+  Example code samples code to connect ThingPark Location Solver (tpLS) to an Application Server (AS)
 
-- [tpLS-AS](./tpLS-AS/README.md)  
-  Example code samples and flows to connect ThingPark Location Solver (tpLS) to an Application Server (AS)
-- [NS-NIT-tpLS](./NS-NIT-tpLS/README.md)  
-  Example code samples and flows to connect different 3rd party Network Servers (NS) to ThingPark Location Solver 
-  (tpLS) through a Network Interface Translator (NIT) application. Node-RED samples for NIT deployment are 
-  available for the following 3rd party network servers under the hyperlinks:
-  - [Kerlink](./NS-NIT-tpLS/kerlink/README.md)
-  - [Loriot](./NS-NIT-tpLS/loriot/README.md)
-  - [Multitech](./NS-NIT-tpLS/multitech/README.md)
-  - [Senet](./NS-NIT-tpLS/senet/README.md)
-  - [The Things Network](./NS-NIT-tpLS/the-things-network/README.md)
-- [tpNS-AS](./tpNS-AS/README.md)  
-  Example code samples and flows to connect ThingPark Wireless/Enterprise Network Server to an Application Server
+- [3_NS-NIT-tpLS](./3_NS-NIT-tpLS/README.md)  
+  Example code samples to connect different 3rd party Network Servers (NS) to ThingPark Location Solver 
+  (tpLS) through a Network Interface Translator (NIT) application. 
+
+- [docs](./docs/README.md)  
+  The detailed documentation of this project
+
