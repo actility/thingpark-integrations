@@ -58,7 +58,7 @@ or ThingPark Wireless LoRaWAN network servers with external Application Servers.
 Regardless of the applied integration option (http, mqtt, websocket, etc.) the message bodies are always text 
 documents in either JSON or XML format.
 
-[](){#asdf}
+<a name="asdf" href="#asdf"></a>
 #### 2.1.2 Message types
 ThingPark Network Server (tpNS) sends/receives the following types of messages to/from the application server (AS):
 
