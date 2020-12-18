@@ -1,6 +1,13 @@
 # TTN integration quick setup guide
 
-## Set up your Node RED connector
+## Generate an access token for ThingPark Location Solver (tpLS)
+
+1. Log in to ThingPark DX API through its `/getstarted` endpoint.  
+   https://dx-api-dev1.thingpark.com/getstarted  
+   (Use your ThingPark credentials.)
+2. After the successful login copy the Access Token from the emerging screen.
+
+## Set up a Network Interface Translator (NIT) server for Node-RED.
 
 Set up your Node RED server and App as it is described [here](../../../docs/Node-RED-quick-start.md).  
 You can find example app configuration files (in JSON format) in the [NIT_node-red_example](NIT_node-red_example) folder.  
@@ -8,11 +15,16 @@ There are 2 integration options and both have 2 flows: an uplink flow and a down
 
 1. Integration with a REST API  
    The example flow of this option is in the [ttn-rest-nodere.json](./NIT_node-red_example/ttn-rest-nodered.json) file.  
-   In order to allow Node-RED to send (forward) downlink messages to TTN NS, you need to use an access key that can be set by editing the code (msg.key) of "TTN DL Interface" node in the Node-RED GUI.
+   - Open the _'Send UL to Location Solver'_ node and copy the DX API Access Token to the _'Token'_ field of the form.
+   - In order to allow Node-RED to send (forward) downlink messages to TTN NS, you need to use an access key that can be set by editing 
+     the javascript code of "TTN DL Interface" node in the Node-RED GUI. (Modify the value of `msg.key`)  
+     You can get the TTN access key through the TTN console as it is explained at chapter at point 7. of the next chapter.
 2. Integration with MQTT  
     The example flow of this option is in the [ttn-mqtt-nodered.json](./NIT_node-red_example/ttn-mqtt-nodered.json) file.  
-    Please note that MQTT requires a messages broker too: - TTN NS publishes messages to a topic of the Message Broker - The Node-RED demo server will subscribe to that messages and forward them to ThingPark X Location Engine
-   In the MQTT example flows we assumed that the message broker is installed on the same machine as the Node-RED server. You can update the MQTT parameters (url, credentials etc.) by editing the pink [mqtt subscribe] and [mqtt publish] nodes through the Node-RED GUI.
+    Please note that MQTT requires a messages broker too: - TTN NS publishes messages to a topic of the Message Broker - 
+    The Node-RED demo server will subscribe to that messages and forward them to ThingPark X Location Engine
+    In the MQTT example flows we assumed that the message broker is installed on the same machine as the Node-RED server. 
+    You can update the MQTT parameters (url, credentials etc.) by editing the pink [mqtt subscribe] and [mqtt publish] nodes through the Node-RED GUI.
 
 ## Route your device messages from TTN to your Node-RED application
 
