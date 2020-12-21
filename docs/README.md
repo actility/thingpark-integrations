@@ -25,23 +25,24 @@ __NS-NIT__   | The interface between the _3rd Party Network Server_ and the _Net
 This integration architecture is used to set up connectivity between any kind of LoRaWAN end devices and 
 Application Servers through a ThingPark Network Server (that can be either ThingPark Enterprise or ThingPark Wireless).
    
-
-<img src="images/tpNS-AS.png" alt="tpNS-AS" style="height: 600px; display:block; margin:auto"/>
-<br/>
+<p align="center">
+<img src="images/tpNS-AS.png" alt="tpNS-AS" style="height: 600px;"/>
+</p>
 
 Only one interface (the tpNS-AS interface) is used for this integration. The tpNS-AS interface can apply many 
 different protocols. Two of them (HTTP and MQTT) are discribed in the 'Interface Specifications' chapter.
 
 ### 1.2 ThingPark Network Server & ThingPark Location Solver &hArr; 3rd Party Application Server
 
-
-<img src="images/tpNS-tpLS-AS.png" alt="tpNS-tpLS-AS" style="height: 600px; display:block; margin:auto"/>
-<br/>
+<p align="center">
+<img src="images/tpNS-tpLS-AS.png" alt="tpNS-tpLS-AS" style="height: 600px;"/>
+</p>
 
 ### 1.3 Third Party Network Server &hArr; ThingPark Location Solver &hArr; 3rd Party Application Server
 
-<img src="images/NS-NIT-tpLS-AS.png" alt="NS-NIT-tpLS-AS" style="height: 600px; display:block; margin:auto"/>
-<br/>
+<p align="center">
+<img src="images/NS-NIT-tpLS-AS.png" alt="NS-NIT-tpLS-AS" style="height: 600px;"/>
+</p>
 
 ## 2 Integration Interfaces
 

@@ -1,7 +1,12 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\3_NS-NIT-tpLS",
+    "\\3_NS-NIT-tpLS\\NIT",
+    "\\3_NS-NIT-tpLS\\NIT\\the-things-network\\NIT_node-red_example",
+    "\\3_NS-NIT-tpLS\\NIT\\the-things-network\\ttnNS",
+    "\\docs"
   ],
-  "SelectedNode": "\\NS-NIT-tpLS",
+  "SelectedNode": "\\docs\\README.md",
   "PreviewInSolutionExplorer": false
 }
