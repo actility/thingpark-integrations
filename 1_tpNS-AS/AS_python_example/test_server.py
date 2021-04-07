@@ -1,0 +1,87 @@
+import requests
+import json
+
+SERVER_URL = 'http://localhost:8080/'
+# SERVER_URL = 'https://webhook.site/8f043d76-534f-45d0-afdd-4460602c264c'
+
+# Example query parameters
+query_params = {
+    "LrnDevEui": "000000000F1D8693",
+    "LrnFPort": "2",
+    "LrnInfos": "UPHTTP_LAB_LORA",
+    "AS_ID": "app1.sample.com",
+    "Time": "2016-01-11T14%3A11%3A11.333%2B02%3A00",
+    "Token": "fd0b0b00464aa798a59282d64eaa70813e33bff87682880db49638569d096aad"
+}
+
+# Example body of an uplink message
+body = {
+    "DevEUI_uplink": {
+        "-xmlns": "http://uri.actility.com/lora",
+        "Time": "2015-07-09T16:06:38.49+02:00",
+        "DevEUI": "000000000F1D8693",
+        "FPort": "2",
+        "FCntUp": "7011",
+        "ADRbit": "1",
+        "ACKbit": "1",
+        "MType": "4",
+        "FCntDn": "11",
+        "payload_hex": "0027bd00",
+        "mic_hex": "38e7a3b9",
+        "Lrcid": "00000065",
+        "LrrRSSI": "-60.000000",
+        "LrrSNR": "9.750000",
+        "SpFact": "7",
+        "SubBand": "G1",
+        "Channel": "LC2",
+        "DevLrrCnt": "2",
+        "Lrrid": "08040059",
+        "Late": "0",
+        "LrrLAT": "48.874931",
+        "LrrLON": "2.333673",
+        "Lrrs": {
+            "Lrr": [
+                {
+                    "Lrrid": "08040059",
+                    "LrrRSSI": "-60.000000",
+                    "LrrSNR": "9.750000",
+                    "LrrESP": "-59.000000"
+                },
+                {
+                    "Lrrid": "33d13a41",
+                    "LrrRSSI": "-73.000000",
+                    "LrrSNR": "9.750000",
+                    "LrrESP": "-72.000000"
+                }
+            ]
+        },
+        "CustomerID": "100000507",
+        "CustomerData": {
+            "loc": {
+                "lat": "43.58081",
+                "lon": "1.4421667"
+            },
+            "alr": {
+                "pro": "STL",
+                "ver": "1"
+            }
+        },
+        "InstantPER": "0.02",
+        "MeanPER": "0.02",
+        "DevAddr": "0405F519",
+        "UplinkDC": "0.001",
+        "UplinkDCSubBand": "0.009"
+    }
+}
+
+# Example http headers
+headers = { 
+    'Content-Type': 'application/json' 
+}
+
+# Send the test message
+resp = requests.post( SERVER_URL, params=query_params, headers=headers, data=json.dumps(body) )
+
+print('HTTP POST:\n   ', resp.url)
+print('Response code:\n   ', resp.status_code)
+print('Response body:\n   ', resp.text)

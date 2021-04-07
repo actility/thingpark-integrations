@@ -31,5 +31,5 @@ Send a simulated test message:
 python3 test_server.py
 ```
 
-Check if the simulated test message (that is taken from uplink_frame.json file) is written into the msg_logs.txt file properly.
+Check if the simulated test message (that is taken from uplink_frame.json file) is written into the msg.log file properly.
 (Open the file manually and look at its content)

@@ -1,3 +1,4 @@
 .vs/
 venv/
 __pycache__/
+*.log
