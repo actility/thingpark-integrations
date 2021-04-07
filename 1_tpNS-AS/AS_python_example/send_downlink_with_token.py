@@ -1,12 +1,15 @@
 import requests
 from datetime import datetime
-from urllib.parse import urlencode, quote, quote_plus
+from urllib.parse import urlencode
 from hashlib import sha256
 
+# Set the right downlink URL for your platform!
 DOWNLINK_TUNNEL_URL = 'https://community.thingpark.io/thingpark/lrc/rest/downlink'
-# DOWNLINK_TUNNEL_URL = 'https://webhook.site/8f043d76-534f-45d0-afdd-4460602c264c'
+
+# This is the "Tunnel Interface Authentication Key" that was set through the ThingPark GUI at the time the Application/Routing Profile was created
 AS_KEY = 'f3203a20a2e8dfaf6686b621f56d05e3'
 
+# Here you can set the downlink parameters
 query_params = {
     "DevEUI": "20635F0108000496",
     "FPort": "2",
@@ -23,6 +26,8 @@ headers = {
     'Content-Type': 'application/x-www-form-urlencoded' 
 }
 
+# "lambda x, *_: x" is a function that assigns the 1st input parameter as a return value
+# it is needed to perform urlencoding without quoting the content
 query_string = urlencode(query_params, quote_via = lambda x, *_: x)
 Token = sha256( (query_string + AS_KEY).encode() ).hexdigest()
 
