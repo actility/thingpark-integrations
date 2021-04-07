@@ -8,6 +8,7 @@ DOWNLINK_TUNNEL_URL = 'https://community.thingpark.io/thingpark/lrc/rest/downlin
 
 # This is the "Tunnel Interface Authentication Key" that was set through the ThingPark GUI at the time the Application/Routing Profile was created
 AS_KEY = 'f3203a20a2e8dfaf6686b621f56d05e3'
+AS_ID = 'TWA_100002167.1111.AS'
 
 # Here you can set the downlink parameters
 query_params = {
@@ -17,7 +18,7 @@ query_params = {
     # "Confirmed": "1", # optional
     # "FlushDownlinkQueue": "1" #optional
     # "ValidityTime": "2018-10-17T16:38:46.882+02:00", # optional
-    "AS_ID": 'TWA_100002167.1111.AS',
+    "AS_ID": AS_ID,
     "Time": datetime.now().astimezone().isoformat(),
     # "CorrelationID": "1234" # optional
 }
