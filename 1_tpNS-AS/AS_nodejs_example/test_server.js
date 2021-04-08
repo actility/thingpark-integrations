@@ -88,7 +88,7 @@ const req = http.request(
     res => {
         console.log(`statusCode: ${res.statusCode}`);
         res.on('data', d => {
-            process.stdout.write(d);
+            console.log(d.toString(), '\n');
         });
     }
 )
@@ -99,9 +99,3 @@ req.on('error', error => {
   
 req.write(JSON.stringify(body))
 req.end()
-
-/*
-print('HTTP POST:\n   ', resp.url)
-print('Response code:\n   ', resp.status_code)
-print('Response body:\n   ', resp.text)
-*/

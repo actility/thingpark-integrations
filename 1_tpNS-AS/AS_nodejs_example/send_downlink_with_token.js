@@ -76,7 +76,7 @@ const req = https.request(
     res => {
         console.log(`statusCode: ${res.statusCode}`);
         res.on('data', d => {
-            console.log(d.toString(), '\n')
+            console.log(d.toString(), '\n');
         });
     }
 )
@@ -87,11 +87,3 @@ req.on('error', error => {
   
 req.write('')
 req.end()
-
-/*
-response = post( DOWNLINK_BASE_URL + '?' + query_string );
-
-print('HTTP POST:\n   ', response.url)
-print('Response code:\n   ', response.status_code)
-print('Response body:\n   ', response.text)
-*/
