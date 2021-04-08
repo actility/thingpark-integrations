@@ -2,7 +2,6 @@ import requests
 import json
 
 SERVER_URL = 'http://localhost:8080/'
-# SERVER_URL = 'https://webhook.site/8f043d76-534f-45d0-afdd-4460602c264c'
 
 # Example query parameters
 query_params = {
