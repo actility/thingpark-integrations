@@ -1,0 +1,15 @@
+{
+  "name": "as_nodejs_example",
+  "version": "1.0.0",
+  "description": "Basic Application Server integrated with ThingPark",
+  "main": "server.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Norbert Herbert",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "moment": "^2.29.1"
+  }
+}

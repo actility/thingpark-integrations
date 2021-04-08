@@ -49,7 +49,7 @@ query_string += '&AS_ID=' + AS_ID + '&Time=' + Time
 
 # 'CorrelationID' is optional part of the query_string
 if CorrelationID:
-    query_string           += '&CorrelationID=' + CorrelationID
+    query_string += '&CorrelationID=' + CorrelationID
 
 # 'Token' is mandatory part of the query_string
 Token = sha256( (query_string + AS_KEY).encode() ).hexdigest()
