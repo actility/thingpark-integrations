@@ -1,5 +1,4 @@
 from hashlib import sha256
-from urllib.parse import parse_qs
 
 # This is the "Tunnel Interface Authentication Key" that was set through the ThingPark GUI at the time the Application/Routing Profile was created
 AS_KEY = 'f3203a20a2e8dfaf6686b621f56d05e3'

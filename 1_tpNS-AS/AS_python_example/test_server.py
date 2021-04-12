@@ -5,71 +5,75 @@ SERVER_URL = 'http://localhost:8080/'
 
 # Example query parameters
 query_params = {
-    "LrnDevEui": "000000000F1D8693",
-    "LrnFPort": "2",
-    "LrnInfos": "UPHTTP_LAB_LORA",
-    "AS_ID": "app1.sample.com",
-    "Time": "2016-01-11T14%3A11%3A11.333%2B02%3A00",
-    "Token": "fd0b0b00464aa798a59282d64eaa70813e33bff87682880db49638569d096aad"
+    'LrnDevEui': '20635F0108000496',
+    'LrnFPort': 17,
+    'LrnInfos': 'TWA_100002167.1111.AS-1-111974',
+    'AS_ID': 'TWA_100002167.1111.AS',
+    'Time': '2021-04-07T08:49:51.551+00:00',
+    'Token': '196c22898bf95fcf48b72be198c89256410660b9b514539651344baa594ad74f'
 }
 
 # Example body of an uplink message
 body = {
     "DevEUI_uplink": {
-        "-xmlns": "http://uri.actility.com/lora",
-        "Time": "2015-07-09T16:06:38.49+02:00",
-        "DevEUI": "000000000F1D8693",
-        "FPort": "2",
-        "FCntUp": "7011",
-        "ADRbit": "1",
-        "ACKbit": "1",
-        "MType": "4",
-        "FCntDn": "11",
-        "payload_hex": "0027bd00",
-        "mic_hex": "38e7a3b9",
-        "Lrcid": "00000065",
-        "LrrRSSI": "-60.000000",
-        "LrrSNR": "9.750000",
-        "SpFact": "7",
+        "Time": "2021-04-07T08:49:45.235+00:00",
+        "DevEUI": "20635F0108000496",
+        "FPort": 17,
+        "FCntUp": 18,
+        "MType": 2,
+        "FCntDn": 2,
+        "payload_hex": "032ce4850919d85d4c9f793ad148d24f32f3c6b5488f5a087cbeb1488f5a998c83ab",
+        "mic_hex": "edf64cd8",
+        "Lrcid": "000000CC",
+        "LrrRSSI": -67,
+        "LrrSNR": 9,
+        "SpFact": 8,
         "SubBand": "G1",
         "Channel": "LC2",
-        "DevLrrCnt": "2",
-        "Lrrid": "08040059",
-        "Late": "0",
-        "LrrLAT": "48.874931",
-        "LrrLON": "2.333673",
+        "DevLrrCnt": 1,
+        "Lrrid": "10000036",
+        "Late": 0,
+        "LrrLAT": 47.438381,
+        "LrrLON": 18.926418,
         "Lrrs": {
             "Lrr": [
                 {
-                    "Lrrid": "08040059",
-                    "LrrRSSI": "-60.000000",
-                    "LrrSNR": "9.750000",
-                    "LrrESP": "-59.000000"
-                },
-                {
-                    "Lrrid": "33d13a41",
-                    "LrrRSSI": "-73.000000",
-                    "LrrSNR": "9.750000",
-                    "LrrESP": "-72.000000"
+                    "Lrrid": "10000036",
+                    "Chain": 0,
+                    "LrrRSSI": -67,
+                    "LrrSNR": 9,
+                    "LrrESP": -67.514969
                 }
             ]
         },
-        "CustomerID": "100000507",
+        "CustomerID": "100002167",
         "CustomerData": {
-            "loc": {
-                "lat": "43.58081",
-                "lon": "1.4421667"
-            },
             "alr": {
-                "pro": "STL",
+                "pro": "ABEE/APY",
                 "ver": "1"
             }
         },
-        "InstantPER": "0.02",
-        "MeanPER": "0.02",
-        "DevAddr": "0405F519",
-        "UplinkDC": "0.001",
-        "UplinkDCSubBand": "0.009"
+        "ModelCfg": "0",
+        "DriverCfg": {
+            "mod": {
+            "pId": "abeeway",
+            "mId": "micro-tracker",
+            "ver": "3"
+            },
+            "app": {
+            "pId": "abeeway",
+            "mId": "asset-tracker",
+            "ver": "2"
+            }
+        },
+        "InstantPER": 0,
+        "MeanPER": 0,
+        "DevAddr": "05AE3D2F",
+        "AckRequested": 0,
+        "rawMacCommands": "",
+        "TxPower": 16,
+        "NbTrans": 1,
+        "DynamicClass": "A"
     }
 }
 
