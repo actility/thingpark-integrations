@@ -5,10 +5,41 @@ import json
 from werkzeug.wrappers import Request, Response
 from hashlib import sha256
 
+PORT = '8080'
 AS_ID = 'TWA_100002167.1111.AS'
 AS_KEY = 'f3203a20a2e8dfaf6686b621f56d05e3'
 
 app = Flask(__name__)
+
+@app.route('/', methods=['POST'])
+def server():
+    ''' This function validates an uplink frame and saves the POST request body and query 
+    parameters into the local msg.log file. '''
+
+    body = request.json
+    query_params = request.args
+
+    # Verify the UL frame
+    if not verify_ul_frame(query_params, body, AS_ID, AS_KEY):
+        return ('Authentication failed', 401)
+
+    body_txt = json.dumps(body, indent=4)
+    query_params_txt = json.dumps(query_params, indent=4)
+
+    with open("msg.log", "a+") as messages_file_object:
+        messages_file_object.write(
+            "Date/Time: " + str(datetime.now()) + "\n" +
+            "Query parameters: \n" +
+            query_params_txt + "\n" +
+            "Body: \n" +
+            body_txt + "\n\n"
+        )
+    return ('', 204)
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=PORT, debug=True)
+
+
 
 def verify_ul_frame(query_params, body, as_id, as_key):
 
@@ -46,31 +77,3 @@ def verify_ul_frame(query_params, body, as_id, as_key):
 
     print('This is a valid Uplink Frame!')
     return True
-
-@app.route('/', methods=['POST'])
-def server():
-    ''' This server validates and uplink frame and saves the POST request body and query 
-    parameters into the local msg.log file. '''
-
-    body = request.json
-    query_params = request.args
-
-    # Verify the UL frame
-    if not verify_ul_frame(query_params, body, AS_ID, AS_KEY):
-        return ('Authentication failed', 401)
-
-    body_txt = json.dumps(body, indent=4)
-    query_params_txt = json.dumps(query_params, indent=4)
-
-    with open("msg.log", "a+") as messages_file_object:
-        messages_file_object.write(
-            "Date/Time: " + str(datetime.now()) + "\n" +
-            "Query parameters: \n" +
-            query_params_txt + "\n" +
-            "Body: \n" +
-            body_txt + "\n\n"
-        )
-    return ('', 204)
-
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port='8080', debug=True)

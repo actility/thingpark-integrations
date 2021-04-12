@@ -28,8 +28,15 @@ python3 server.py
 Send a simulated test message:
 (Do it from a different terminal while the server is running)
 ```
-python3 test_server.py
+python3 test_the_server.py
 ```
 
-Check if the simulated test message (that is taken from uplink_frame.json file) is written into the msg.log file properly.
+Check if the simulated test message is written into the msg.log file properly.
 (Open the file manually and look at its content)
+
+-----------------------
+Send a downlink message to ThingPark Community Platform:  
+(Edit the code and set the configuration constants properly))
+```
+python3 send_downlink_with_token.py
+```
