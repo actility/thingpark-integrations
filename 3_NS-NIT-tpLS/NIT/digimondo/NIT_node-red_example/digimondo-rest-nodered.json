@@ -1,0 +1,147 @@
+[
+    {
+        "id": "ac80c799.583ec8",
+        "type": "comment",
+        "z": "490e650d.6b185c",
+        "name": "From NS to Location Solver - REST",
+        "info": "[Digimondo API documentation](https://apidocs.fireflyiot.com/)",
+        "x": 200,
+        "y": 3600,
+        "wires": []
+    },
+    {
+        "id": "4c414e6f.32a75",
+        "type": "http in",
+        "z": "490e650d.6b185c",
+        "name": "",
+        "url": "/uplink_digimondo/0001",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 230,
+        "y": 3680,
+        "wires": [
+            [
+                "4c50c9d8.844bc8",
+                "849c4501.547f38",
+                "fc999fc9.e86bb"
+            ]
+        ]
+    },
+    {
+        "id": "4c50c9d8.844bc8",
+        "type": "http response",
+        "z": "490e650d.6b185c",
+        "name": "http response",
+        "statusCode": "",
+        "headers": {
+            "content-type": "application/json"
+        },
+        "x": 520,
+        "y": 3700,
+        "wires": []
+    },
+    {
+        "id": "cc08c1a.9556e4",
+        "type": "debug",
+        "z": "490e650d.6b185c",
+        "name": "debug: to Solver",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 800,
+        "y": 3620,
+        "wires": []
+    },
+    {
+        "id": "16d8d0ad.7a917f",
+        "type": "http request",
+        "z": "490e650d.6b185c",
+        "name": "Send UL to Location Solver",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "https://dx-api-dev1.thingpark.com/location/latest/api/feeds",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "bearer",
+        "x": 1080,
+        "y": 3660,
+        "wires": [
+            [
+                "12281a11.4e6f36"
+            ]
+        ]
+    },
+    {
+        "id": "12281a11.4e6f36",
+        "type": "debug",
+        "z": "490e650d.6b185c",
+        "name": "debug: Solver response",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1110,
+        "y": 3620,
+        "wires": []
+    },
+    {
+        "id": "849c4501.547f38",
+        "type": "function",
+        "z": "490e650d.6b185c",
+        "name": "Digimondo UL interface",
+        "func": "/******************************************/\n/*** Helium UL interface                 ***/\n/******************************************/\n\nbody = (typeof msg.payload == 'string') ? JSON.parse(msg.payload) : msg.payload;\nmsg.payload = translate(body);\nreturn msg;\n\nfunction translate(body) {\n\n    let feeds = {\n        // deviceEUI: \"\",                                     // mandatory\n        // time: \"\",\n        // coordinates: [],                                   // [longitude, latitude, altitude]\n        // used if NS provides resolved coordinates\n        solverInput: {\n            solverInputType: \"FeedInputForGenericSolver\",\n            // sequenceNumber: 1,                             // LoRaWAN FCntUp\n            // port: 1,                                       // LoRaWAN FPort\n            // receptionTime: \"\",\n            // SF: 12,                                        // LoRaWAN Spreading Factor\n            packets: [\n                // {\n                // baseStationId: \"0805022D\",\n                // antennaId: 0,\n                // antennaCoordinates: [7.0513, 43.6181], // [longitude, latitude, altitude]\n                // antennaHeight: 150,                    // in cm\n                // SNR: 10,                               // in dB\n                // RSSI: -29,                             // in dBm\n                // barometerMeasure: 0,                   // in mB\n                // arrivalSeconds: 1,                     // in seconds\n                // arrivalAdditionalNanos: 7275           // in nanoseconds\n                // }\n            ]\n            // dynamicMotionState: \"string\",    // ['MOVING', 'STATIC', 'UNKNOWN']\n            // temperatureMeasure: 0,           // in Celsius\n            // accelerometerMeasures: [],       // measures per axis, i.e. [x, y, z]\n            // gyroscopeMeasures: [],           // measures per axis, i.e. [roll, pitch, yaw]\n            // barometerMeasure: 0,             // in mBar\n            // lastContext: \"string\"            // Base64 encoded binary solver state\n            // with the last calculated position\n        },\n        payload: {\n            deviceProfileId: \"ABEEWAY/MICRO\",   // Currently only Abeeway Microtracker and\n            // Industrial Tracker are supported. \"deviceProfileId\"\n            // should be set to \"ABEEWAY/MICRO\" for both\n            payloadEncoded: \"\"\n        }\n    }\n\n    if ('device_eui' in body.up_packet) {\n        feeds.deviceEUI = body.up_packet.device_eui;\n    }\n    else {\n        throw new Error(\"Missing property: device_eui\");\n    }\n\n    if ('received_at' in body.up_packet) {\n        feeds.time = body.up_packet.received_at;\n        feeds.solverInput.receptionTime = body.up_packet.received_at;\n    }\n    if ('fcnt' in body.up_packet) {\n        feeds.solverInput.sequenceNumber = body.up_packet.fcnt;\n    }\n    if ('port' in body.up_packet) {\n        feeds.solverInput.port = body.up_packet.port\n    }\n    if ('spreading_factor' in body.up_packet) {\n        feeds.solverInput.SF = body.up_packet.spreading_factor\n    } else { feeds.solverInput.SF = 10; }\n\n    if ('gwrx' in body.up_packet) {\n        if (('gwrx' in body.up_packet) && Array.isArray(body.up_packet.gwrx)) {\n            let gateways = body.up_packet.gwrx;\n            let packet;\n            for (let i = 0; i < gateways.length; i++) {\n                packet = {};\n                if ('gweui' in gateways[i]) {\n                    packet.baseStationId = gateways[i].gweui;\n                }\n                if ('lsnr' in gateways[i]) {\n                    packet.SNR = gateways[i].lsnr;\n                }\n                if ('rssi' in gateways[i]) {\n                    packet.RSSI = gateways[i].rssi;\n                }\n                if ('ant' in gateways[i]) {\n                    packet.antennaId = gateways[i].ant;\n                }\n                \n                if ('stat' in gateways[i]) {\n                \n                    if (\n                        ('long' in gateways[i].stat) &&\n                        ('lati' in gateways[i].stat)\n                    ) {\n                        packet.antennaCoordinates = [\n                            gateways[i].stat.long,\n                            gateways[i].stat.lati\n                        ];\n                        if ('alti' in gateways[i].stat) {\n                            packet.antennaCoordinates.push(gateways[i].stat.alti);\n                        }\n                    }\n                    \n                }                \n                \n                feeds.solverInput.packets.push(packet);\n            }\n        }\n    }\n\n    if ('payload' in body.up_packet) {\n        feeds.payload.payloadEncoded = body.up_packet.payload; \n    }\n\n    return feeds;\n\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 770,
+        "y": 3660,
+        "wires": [
+            [
+                "cc08c1a.9556e4",
+                "16d8d0ad.7a917f",
+                "af88113a.3f13c"
+            ]
+        ]
+    },
+    {
+        "id": "b7e30042.f6455",
+        "type": "inject",
+        "z": "490e650d.6b185c",
+        "name": "Sample msg - Digimondo",
+        "topic": "LoRaWAN_Uplink",
+        "payload": "{\"up_packet\":{\"uid\":\"ce1c61e8-83ab-4ddb-88be-fc149e10bdd3\",\"spreading_factor\":7,\"size\":26,\"received_at\":\"2021-04-13T07:53:24.909792\",\"port\":5,\"payload_encrypted\":false,\"payload\":\"0100D9021D0400310502070DB2\",\"parsed\":null,\"mtype\":\"unconfirmed_data_up\",\"modu\":\"LORA\",\"mic_pass\":true,\"gwrx\":[{\"tmst\":4250994035,\"time\":\"2021-04-13T07:53:23.926019Z\",\"stat\":{\"long\":9.98784,\"lati\":53.54534,\"alti\":-2},\"srv_rcv_time\":1618300404146945,\"rssi\":-48,\"lsnr\":15,\"gweui\":\"7276FF002E050039\",\"ant\":0},{\"tmst\":4250994035,\"time\":\"2021-04-13T07:53:23.926019Z\",\"stat\":{\"long\":9.98784,\"lati\":53.54534,\"alti\":-2},\"srv_rcv_time\":1618300404146945,\"rssi\":-98,\"lsnr\":14,\"gweui\":\"7276FF002E050039\",\"ant\":1}],\"freq\":867.7,\"fopts\":\"\",\"fcnt\":1732,\"device_eui\":\"A81758FFFE03AD50\",\"datr\":\"SF7BW125\",\"codr\":\"4/5\",\"bandwidth\":125,\"ack\":null}}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 210,
+        "y": 3640,
+        "wires": [
+            [
+                "849c4501.547f38"
+            ]
+        ]
+    },
+    {
+        "id": "fc999fc9.e86bb",
+        "type": "debug",
+        "z": "490e650d.6b185c",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 550,
+        "y": 3620,
+        "wires": []
+    }
+]
