@@ -3,7 +3,6 @@ version: "3.9"
 services:
 
   app:
-    build: .
     image: nherbert/tpxle-nit:0.0.1
     container_name: tpxle_nit_app
     ports:
