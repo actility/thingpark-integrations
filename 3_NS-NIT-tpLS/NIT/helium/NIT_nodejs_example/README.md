@@ -1,14 +1,10 @@
 # Easy installation without building the app
-0. Please make sure that beyond docker engine you have [docker-compose](https://docs.docker.com/compose/install/) available on your platform. 
-1. Create the `tpxle-nit` directory and download the `docker-compose-prod.yml` file to that directory
+0. Make sure that beyond docker engine you have [docker-compose](https://docs.docker.com/compose/install/) available on your platform.  
+1. Download the `docker-compose-prod.yml` file from this repo:
     ```
-    mkdir tpxle-nit
-
-    cd tpxle-nit
-    
     curl https://raw.githubusercontent.com/actility/thingpark-integrations/main/3_NS-NIT-tpLS/NIT/helium/NIT_nodejs_example/docker-compose-prod.yml -o docker-compose.yml
     ```
-2. Run the following command in the directory you created
+2. Run the following command from the same directory the `docker-compose.yml` file is located.
     ```
     docker-compose up -detach
     ```
@@ -17,7 +13,7 @@
     curl localhost:8081/test
     ```
 
-# Buld and test the app in a development environment
+# Build and test the app in a development environment
 ## Installation
 
 1. Clone this repo and enter to the folder of this project
