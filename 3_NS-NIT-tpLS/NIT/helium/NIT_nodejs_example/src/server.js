@@ -72,6 +72,7 @@ app.post('/uplink_from_helium', (req, res) => {
     })
     .catch(err => console.error(err))
     .then(authorization_header => {
+        console.log(JSON.stringify(translated_body, null, 2));
         return fetch(
             TPXLE_FEED_URL,
             {

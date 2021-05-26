@@ -2,7 +2,13 @@
 
 ## Easy installation without building the app
 0. Make sure that beyond docker engine you have [docker-compose](https://docs.docker.com/compose/install/) available on your platform.  
-1. Download the `docker-compose-prod.yml` file from this repo:
+1. Create a flolder structure for the config and the persistent db of the app:
+    ```
+    mkdir -p tpxle-nit/redis-data
+    cd tpxle-nit
+    ```
+1. Download the `docker-compose-prod.yml` file from this repo.
+   Execute the following command from the previously created `tpxle-nit` folder.
     ```
     curl https://raw.githubusercontent.com/actility/thingpark-integrations/main/3_NS-NIT-tpLS/NIT/helium/NIT_nodejs_example/docker-compose-prod.yml -o docker-compose.yml
     ```
@@ -12,7 +18,7 @@
     ```
 3. Check if the server is working
     ```
-    curl localhost:8081/test
+    curl http://localhost:8081/test
     ```
 4. For a production platform we recommend to configure an nginx reverse proxy so that `http://localhost:8081` is mapped to a public `https://<public-domain-name>/tpxle-nit` web page with proper certifications. For that the following text need to be added to the nginx server configuration:
     ```
