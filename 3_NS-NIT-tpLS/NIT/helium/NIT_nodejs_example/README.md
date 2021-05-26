@@ -12,6 +12,7 @@
     ```
     curl localhost:8081/test
     ```
+4. For a production platform we recommend to configure an nginx reverse proxy so that `http://localhost:8081` is mapped to a public `https://<public-domain-name>/tpxle-nit` web page with proper certifications. 
 
 # Build and test the app in a development environment
 ## Installation
