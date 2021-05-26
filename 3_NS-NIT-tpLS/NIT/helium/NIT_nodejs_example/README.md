@@ -5,7 +5,7 @@
 
     cd tpxle-nit
     
-    curl https://raw.githubusercontent.com/actility/thingpark-integrations/main/3_NS-NIT-tpLS/NIT/helium/NIT_nodejs_example/docker-compose-prod.yml docker-compose.yml
+    curl https://raw.githubusercontent.com/actility/thingpark-integrations/main/3_NS-NIT-tpLS/NIT/helium/NIT_nodejs_example/docker-compose-prod.yml -o docker-compose.yml
     ```
 2. Run the following command in the directory you created
     ```
