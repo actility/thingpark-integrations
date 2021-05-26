@@ -5,7 +5,7 @@
 
     cd tpxle-nit
     
-    curl -F https://raw.githubusercontent.com/actility/thingpark-integrations/main/3_NS-NIT-tpLS/NIT/helium/NIT_nodejs_example/docker-compose.yml
+    curl https://raw.githubusercontent.com/actility/thingpark-integrations/main/3_NS-NIT-tpLS/NIT/helium/NIT_nodejs_example/docker-compose-prod.yml docker-compose.yml
     ```
 2. Run the following command in the directory you created
     ```
@@ -20,20 +20,15 @@
 ## Installation
 
 1. Clone this repo and enter to the folder of this project
-2. Use the `docker-compose-dev.yml` file for development
-    ```
-    mv docker-compose.yml docker-compose-prod.yml
-    mv docker-compose-dev.yml docker-compose.yml
-    ```
-3. Build the docker images:
+2. Build the docker images:
     ```
     docker-compose build
     ```
-4. Create containers without starting them:
+3. Create containers without starting them:
     ```
     docker-compose up --no-start
     ```
-5. Run containers in detached mode
+4. Run containers in detached mode
     ```
     docker-compose up --detach
     ```
