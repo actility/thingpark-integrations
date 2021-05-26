@@ -1,5 +1,6 @@
 # Easy installation without building the app
-1. Create a directory and download the `docker-compose.yml` file to that directory
+0. Please make sure that beyond docker engine you have [docker-compose](https://docs.docker.com/compose/install/) available on your platform. 
+1. Create the `tpxle-nit` directory and download the `docker-compose-prod.yml` file to that directory
     ```
     mkdir tpxle-nit
 
@@ -9,7 +10,7 @@
     ```
 2. Run the following command in the directory you created
     ```
-    docker-compose up
+    docker-compose up -detach
     ```
 3. Check if the server is working
     ```
