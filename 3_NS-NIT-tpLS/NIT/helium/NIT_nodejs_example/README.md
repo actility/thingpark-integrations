@@ -45,12 +45,12 @@ All previous tasks with one single command:
 
 ## Maintain the server
 
-    Test the server
+Test the server
     ```
     curl localhost:8081/test
     ```
 
-    Stop containers
+Stop containers
     ```
     docker-compose stop
     ```
