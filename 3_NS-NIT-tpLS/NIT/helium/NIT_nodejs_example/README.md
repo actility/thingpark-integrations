@@ -1,4 +1,6 @@
-# Easy installation without building the app
+# Helium Network Interface Translator for ThingPark X Location Engine
+
+## Easy installation without building the app
 0. Make sure that beyond docker engine you have [docker-compose](https://docs.docker.com/compose/install/) available on your platform.  
 1. Download the `docker-compose-prod.yml` file from this repo:
     ```
@@ -14,8 +16,8 @@
     ```
 4. For a production platform we recommend to configure an nginx reverse proxy so that `http://localhost:8081` is mapped to a public `https://<public-domain-name>/tpxle-nit` web page with proper certifications. 
 
-# Build and test the app in a development environment
-## Installation
+## Build and test the app in a development environment
+### Installation
 
 1. Clone this repo and enter to the folder of this project
 2. Build the docker images:
@@ -36,7 +38,7 @@ All previous tasks with one single command:
     docker-compose up --build --detach
     ```
 
-## Maintain the server
+### Maintain the server
 
 Test the server
     ```
@@ -48,7 +50,7 @@ Stop containers
     docker-compose stop
     ```
 
-# Debugging
+## Debugging
 
 Connect to the app container via CLI:
     ```
