@@ -5,7 +5,7 @@
 
     cd tpxle-nit
     
-    wget https://raw.githubusercontent.com/actility/thingpark-integrations/main/3_NS-NIT-tpLS/NIT/helium/NIT_nodejs_example/docker-compose.yml
+    curl -F https://raw.githubusercontent.com/actility/thingpark-integrations/main/3_NS-NIT-tpLS/NIT/helium/NIT_nodejs_example/docker-compose.yml
     ```
 2. Run the following command in the directory you created
     ```
