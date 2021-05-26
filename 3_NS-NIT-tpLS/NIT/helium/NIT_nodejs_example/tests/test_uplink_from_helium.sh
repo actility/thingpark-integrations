@@ -1,7 +1,7 @@
 #!/bin/bash
 
-CLIENT_ID=community-api/norbert.herbert+cmty@actility.com
-CLIENT_SECRET=n0Rabab@1234
+CLIENT_ID=<YOUR_CLIENT_ID>
+CLIENT_SECRET=<YOUR_CLIENT_SECRET>
 
 curl -i -X POST \
 -H "content-type: application/json" \

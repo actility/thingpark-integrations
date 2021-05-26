@@ -1,7 +1,7 @@
 {
-    "app_eui": "20635F0001000013",
-    "dev_eui": "20635F0108000496",
-    "devaddr": "47000048",
+    "app_eui": "AABBCCDDAABBCCDD",
+    "dev_eui": "<YOUR_DEVEUI>",
+    "devaddr": "AABBCCDD",
     "downlink_url": "https://console.helium.com/api/v1/down/602d5ed3-9f7a-46a8-8f2f-fc708934a6df/aqT-TV_bzcXZ6VbU3pp8v_oohvwX-0eR/ac79ea27-c83c-46ea-8ac8-3061532f8bcb",
     "fcnt": 347,
     "hotspots": [
