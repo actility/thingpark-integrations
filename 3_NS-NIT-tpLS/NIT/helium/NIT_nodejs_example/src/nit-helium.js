@@ -83,8 +83,8 @@ let uplink = body => {
                     packet.RSSI = gateways[i].rssi;
                 }
                 if (
-                    ('long' in gateways[i]) &&
-                    ('lat' in gateways[i])
+                    ('long' in gateways[i]) && parseFloat(gateways[i].long) &&
+                    ('lat' in gateways[i]) && parseFloat(gateways[i].lat)
                 ) {
                     packet.antennaCoordinates = [
                         gateways[i].long,
