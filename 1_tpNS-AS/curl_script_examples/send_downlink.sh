@@ -1,5 +1,5 @@
+url='community.thingpark.io/thingpark/lrc/rest/downlink'
 
-url="https://api.thingpark.com/thingpark/lrc/rest/downlink"
 DevEUI="000000000F1D8693"
 FPort="1"
 Payload="00"
