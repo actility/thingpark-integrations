@@ -1,0 +1,47 @@
+{
+    "app_eui": "20635F0001000013",
+    "dc": {
+        "balance": 10447196,
+        "nonce": 2
+    },
+    "dev_eui": "20635F01070003D6",
+    "devaddr": "22000048",
+    "downlink_url": "https://console.helium.com/api/v1/down/ce1cca28-d7d6-4bd8-9c02-8c05b19c5388/UgNAFTiqcIu6w0O0c56xb8_KpTVUBgff/1c2261d3-f507-4007-ba8f-c50e995948bb",
+    "fcnt": 13004,
+    "hotspots": [
+        {
+            "channel": 9,
+            "frequency": 904.0999755859375,
+            "id": "112cwg4GKsCoZ1T6aazqhYuioV7YgzXgdeSUEfMK8qAfZXBgQ21r",
+            "lat": 34.10938466877016,
+            "long": -118.3236088120557,
+            "name": "soaring-topaz-bat",
+            "reported_at": 1607554959,
+            "rssi": -37,
+            "snr": 11.5,
+            "spreading": "SF9BW125",
+            "status": "success"
+        }
+    ],
+    "id": "1c2261d3-f507-4007-ba8f-c50e995948bb",
+    "metadata": {
+        "labels": [
+            {
+                "id": "c719a886-3205-40ac-bd89-121bac21fb02",
+                "name": "Cayenne Base",
+                "organization_id": "048ab363-2ae3-429b-9308-5b134e3d4c1c"
+            },
+            {
+                "id": "f0bb8b5c-a9c3-46f5-a9ce-3dc8b85e6e67",
+                "name": "HeliumCargo",
+                "organization_id": "048ab363-2ae3-429b-9308-5b134e3d4c1c"
+            }
+        ],
+        "organization_id": "048ab363-2ae3-429b-9308-5b134e3d4c1c"
+    },
+    "name": "Abeeway (DEABE004-159US)",
+    "payload": "BSDVklBAAQkBAgAA",
+    "payload_size": 12,
+    "port": 17,
+    "reported_at": 1607554959
+}

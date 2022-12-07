@@ -1,0 +1,288 @@
+[
+    {
+        "id": "3f4832dc.932c9e",
+        "type": "comment",
+        "z": "490e650d.6b185c",
+        "name": "From NS to Location Solver - REST",
+        "info": "",
+        "x": 200,
+        "y": 1280,
+        "wires": []
+    },
+    {
+        "id": "7ede7a21.30e124",
+        "type": "comment",
+        "z": "490e650d.6b185c",
+        "name": "From Location Solver to NS - REST",
+        "info": "",
+        "x": 200,
+        "y": 1420,
+        "wires": []
+    },
+    {
+        "id": "d5f84929.0649b8",
+        "type": "comment",
+        "z": "490e650d.6b185c",
+        "name": "Loriot Integration Examples",
+        "info": "[Loriot API data format](https://docs.loriot.io/display/LNS/API+Data+Format)\n\n[How to send downlink to Loriot NS](https://docs.loriot.io/display/LNS/Example+Downlink+Messages)",
+        "x": 130,
+        "y": 1220,
+        "wires": []
+    },
+    {
+        "id": "c308fad0.9a2ff8",
+        "type": "http in",
+        "z": "490e650d.6b185c",
+        "name": "",
+        "url": "/uplink_loriot/0001",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 220,
+        "y": 1360,
+        "wires": [
+            [
+                "5cb9b695.356288",
+                "80f10bf7.4ee598"
+            ]
+        ]
+    },
+    {
+        "id": "5cb9b695.356288",
+        "type": "http response",
+        "z": "490e650d.6b185c",
+        "name": "http response",
+        "statusCode": "",
+        "headers": {
+            "content-type": "application/json"
+        },
+        "x": 520,
+        "y": 1380,
+        "wires": []
+    },
+    {
+        "id": "722e85db.ccde1c",
+        "type": "debug",
+        "z": "490e650d.6b185c",
+        "name": "debug: to Solver",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 800,
+        "y": 1300,
+        "wires": []
+    },
+    {
+        "id": "53807afa.db3d44",
+        "type": "http request",
+        "z": "490e650d.6b185c",
+        "name": "Send UL to Location Solver",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "https://dx-api.thingpark.com/location/latest/api/feeds",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "bearer",
+        "x": 1080,
+        "y": 1340,
+        "wires": [
+            [
+                "76e600af.1af89"
+            ]
+        ]
+    },
+    {
+        "id": "76e600af.1af89",
+        "type": "debug",
+        "z": "490e650d.6b185c",
+        "name": "debug: Solver response",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1110,
+        "y": 1300,
+        "wires": []
+    },
+    {
+        "id": "c38327ce.071b38",
+        "type": "http in",
+        "z": "490e650d.6b185c",
+        "name": "",
+        "url": "/downlink_loriot/0001",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 230,
+        "y": 1500,
+        "wires": [
+            [
+                "24638122.e995fe",
+                "5243536b.f4c99c"
+            ]
+        ]
+    },
+    {
+        "id": "24638122.e995fe",
+        "type": "http response",
+        "z": "490e650d.6b185c",
+        "name": "http response",
+        "statusCode": "",
+        "headers": {
+            "content-type": "application/json"
+        },
+        "x": 520,
+        "y": 1520,
+        "wires": []
+    },
+    {
+        "id": "5243536b.f4c99c",
+        "type": "function",
+        "z": "490e650d.6b185c",
+        "name": "Loriot DL interface",
+        "func": "/******************************************/\n/*** Loriot DL interface                ***/\n/******************************************/\n\nlet params = msg.payload;\nmsg.payload = {\n    \"cmd\"       : \"tx\",\n    \"EUI\"       : params.deveui,\n    \"port\"      : params.port,\n    \"confirmed\" : false,\n    \"data\"      : params.payload\n};\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 750,
+        "y": 1480,
+        "wires": [
+            [
+                "1bffec8b.89f493",
+                "fbfb75d9.d9f4d8"
+            ]
+        ]
+    },
+    {
+        "id": "cee6af6.901905",
+        "type": "inject",
+        "z": "490e650d.6b185c",
+        "name": "Sample msg - Loc Solver",
+        "topic": "",
+        "payload": "{\"type\":\"downlink\",\"deveui\":\"20635F0108000496\",\"port\":12,\"payload\":\"AABBCC\"}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 210,
+        "y": 1460,
+        "wires": [
+            [
+                "5243536b.f4c99c"
+            ]
+        ]
+    },
+    {
+        "id": "1bffec8b.89f493",
+        "type": "debug",
+        "z": "490e650d.6b185c",
+        "name": "debug: to NS",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 790,
+        "y": 1440,
+        "wires": []
+    },
+    {
+        "id": "fbfb75d9.d9f4d8",
+        "type": "http request",
+        "z": "490e650d.6b185c",
+        "name": "Send DL to Loriot NS!!!",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "https://eu1.loriot.io/1/rest",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "bearer",
+        "x": 1070,
+        "y": 1480,
+        "wires": [
+            [
+                "c1a4de43.7ec97"
+            ]
+        ]
+    },
+    {
+        "id": "c1a4de43.7ec97",
+        "type": "debug",
+        "z": "490e650d.6b185c",
+        "name": "debug: NS response",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1100,
+        "y": 1440,
+        "wires": []
+    },
+    {
+        "id": "ba320301.2139",
+        "type": "inject",
+        "z": "490e650d.6b185c",
+        "name": "Sample msg - Loriot",
+        "topic": "LoRaWAN_Uplink",
+        "payload": "{\"cmd\":\"rx\",\"EUI\":\"0011223344556677\",\"ts\":1,\"ack\":false,\"fcnt\":17,\"port\":17,\"encdata\":\"0a50f6830000\",\"data\":\"0a50f6830000\",\"freq\":868100000,\"dr\":\"SF12 BW125 4/5\",\"rssi\":-97,\"snr\":-7.25}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 190,
+        "y": 1320,
+        "wires": [
+            [
+                "80f10bf7.4ee598"
+            ]
+        ]
+    },
+    {
+        "id": "80f10bf7.4ee598",
+        "type": "function",
+        "z": "490e650d.6b185c",
+        "name": "Loriot UL interface",
+        "func": "/******************************************/\n/*** Loriot UL interface              ***/\n/******************************************/\n\nbody = (typeof msg.payload == 'string') ? JSON.parse(msg.payload) : msg.payload;\n\nlet feeds = {\n    // deviceEUI: \"\",                                     // mandatory\n    // time: \"\",\n    // coordinates: [],                                   // [longitude, latitude, altitude]\n                                                          // used if NS provides resolved coordinates\n    solverInput: {\n        solverInputType: \"FeedInputForGpsSolver\",\n        // sequenceNumber: 1,                             // LoRaWAN FCntUp\n        // port: 1,                                       // LoRaWAN FPort\n        // receptionTime: \"\",\n        // SF: 12,                                        // LoRaWAN Spreading Factor\n        packets: [\n            // {\n                // baseStationId: \"0805022D\",\n                // antennaId: 0,\n                // antennaCoordinates: [7.0513, 43.6181], // [longitude, latitude, altitude]\n                // antennaHeight: 150,                    // in cm\n                // SNR: 10,                               // in dB\n                // RSSI: -29,                             // in dBm\n                // barometerMeasure: 0,                   // in mB\n                // arrivalSeconds: 1,                     // in seconds\n                // arrivalAdditionalNanos: 7275           // in nanoseconds\n            // }\n        ]\n        // dynamicMotionState: \"string\",    // ['MOVING', 'STATIC', 'UNKNOWN']\n        // temperatureMeasure: 0,           // in Celsius\n        // accelerometerMeasures: [],       // measures per axis, i.e. [x, y, z]\n        // gyroscopeMeasures: [],           // measures per axis, i.e. [roll, pitch, yaw]\n        // barometerMeasure: 0,             // in mBar\n        // lastContext: \"string\"            // Base64 encoded binary solver state\n                                            // with the last calculated position\n    },\n    payload: {\n        deviceProfileId: \"ABEEWAY/MICRO\",   // Currently only Abeeway Microtracker and\n                                            // Industrial Tracker are supported. \"deviceProfileId\"\n                                            // should be set to \"ABEEWAY/MICRO\" for both\n        payloadEncoded: \"\"\n    }\n}\n\nif ('EUI' in body) { \n    feeds.deviceEUI = body.EUI; \n}\nelse { \n    throw new Error(\"Missing property: EUI\"); \n}\n\nif ('ts' in body) {\n    let date = new Date(body.ts);\n    feeds.time = date.toISOString();\n}\n\nif ('fcnt' in body) { \n    feeds.solverInput.sequenceNumber = body.fcnt; \n}\nif ('port' in body) { \n    feeds.solverInput.port = body.port \n}\n\nif ('ts' in body) {\n    let date = new Date(body.ts);\n    feeds.solverInput.receptionTime = date.toISOString();\n}\n\nif ('dr' in body) { \n    feeds.solverInput.SF = parseInt(body.dr.substring(2,4)); // 'SF12 BW125 4/5'\n}\n\nlet packet = {};\n\n// if ('gtw_id' in body) { \n//     packet.baseStationId = body.gtw_id; \n// } \n\nif ('snr' in body) { \n    packet.SNR = body.snr; \n}\nif ('rssi' in body) { \n    packet.RSSI = body.rssi; \n}\n\n// if ( \n//     ('longitude' in body && \n//     ('latitude' in body) \n// ) {\n//     packet.antennaCoordinates = [ \n//         body.longitude,\n//         body.latitude\n//     ];\n//     if ('altitude' in body) {\n//         packet.antennaCoordinates.push(body.altitude);\n//     }\n// }\n\nfeeds.solverInput.packets.push(packet);\n\nif ('data' in body) { \n    feeds.payload.payloadEncoded = body.data; \n}\n\nmsg.payload = feeds;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 750,
+        "y": 1340,
+        "wires": [
+            [
+                "722e85db.ccde1c",
+                "53807afa.db3d44",
+                "a72beb59.2aac98"
+            ]
+        ]
+    },
+    {
+        "id": "a72beb59.2aac98",
+        "type": "link out",
+        "z": "490e650d.6b185c",
+        "name": "To Codec Service, To Location Solver",
+        "links": [
+            "da189ded.e2ddc",
+            "ff201d2f.bf016",
+            "88ffbc99.452ca",
+            "22028fd3.6d5d9",
+            "4c5b4326.05cbcc",
+            "c2754bbe.3f2c48"
+        ],
+        "x": 975,
+        "y": 1380,
+        "wires": []
+    }
+]

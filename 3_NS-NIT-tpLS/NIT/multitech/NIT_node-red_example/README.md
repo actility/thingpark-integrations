@@ -1,0 +1,2 @@
+In order to try this example you need a Node-RED server that you can install either on your own machine locally or use it on IBM Cloud.  
+For more information on how to install a Nore-RED and import flows read our [Node-RED quick-start guide](../../../../docs/Node-RED-quick-start.md).

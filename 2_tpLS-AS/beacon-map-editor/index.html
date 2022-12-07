@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<title>Beacon Map Editor</title>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+	
+    <link rel="stylesheet" href="https://unpkg.com/@geoman-io/leaflet-geoman-free@latest/dist/leaflet-geoman.css" />  
+    <script src="https://unpkg.com/@geoman-io/leaflet-geoman-free@latest/dist/leaflet-geoman.min.js"></script>  
+
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css">
+    <link rel="stylesheet" href="assets/leaflet.awesome-markers.css">
+    <script src="assets/leaflet.awesome-markers.js"></script>
+
+    <style>
+        html {
+            margin: 10px;
+            font-family: sans-serif, Arial, Helvetica;
+            font-size: 90%;
+        }
+        h1 {
+            color: #008293;
+        }
+        legend {
+            color: #008293;
+            font-weight: bold;
+            font-size: 100%;
+        }
+        .flexcontainer {
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: flex-start;
+            align-items: stretch;
+            align-content: flex-start
+        }
+        .flexcontainer-col {
+            display: flex;
+            flex-flow: column wrap;
+            justify-content: flex-start;
+            align-items: stretch;
+            align-content: flex-start
+        }
+        .flexitem { 
+            flex-flow: 1 1 1;
+            padding: 4px;
+            box-sizing: border-box;
+        }
+
+        #buttons-container {
+            width: 100%
+        }
+
+        #mymap {
+            min-width: 800px;
+            height: 550px;
+            box-sizing: border-box;
+        }
+
+        #geojsonTextarea {
+            width: 400px;
+            height: 350px;
+            padding: 2px 3px 2px 3px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        #tpxle-ul-textarea {
+            width: 400px;
+            height: 150px;
+            padding: 2px 3px 2px 3px;
+            margin-bottom: 10px;
+            box-sizing: border-box;            
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <img src="https://www.abeeway.com/wp-content/uploads/2019/06/Abeeway_LOGO_blue-small.png" alt="Abeeway Logo" height=40px>
+    <h1>Abeeway BLE Beacon Map Editor</h1>
+    <ul>
+        <li>Draw your floorplan on the map</li>
+        <li>Add markers to the places where your BLE Beacons are installed.</li>
+        <li>Edit the mame and MAC address of your beacons in their pop-up menus.</li>
+        <li>Upload the generated geojson text to TPXLE.</li>
+    </ul>
+
+    <div class="flexcontainer-col">
+        <div id="buttons-container" class="flexitem">
+            <button onClick="clearMap(); onExport();">Clear Map</button>
+            <button onClick="onSwitchMap()">Switch Map</button>
+            <button onClick="onImport()">Import</button>
+            <button onClick="onExport()">Export</button>
+        </div>
+
+        <div id="map-and-geojson-container" class="flexcontainer flexitem">
+            <div id="mymap" class="flexitem"></div>
+            <div id="textareas" class="flexcontainer-col flexitem">
+                <legend>GeoJSON output</legend>
+                <textarea id="geojsonTextarea" onChange="onImport()" class="flexitem"></textarea>
+                <legend>Sample msg from from TPXLE</legend>
+                <textarea id="tpxle-ul-textarea" onChange="onImportTPXLE()" class="flexitem"></textarea>
+            </div>
+        </div>
+
+    </div>
+
+<script>
+
+
+    const defaultTpxleUlText = JSON.stringify(
+        { "coordinates": [ 0, 0, 0 ] },
+        null,
+        4
+    );
+    document.getElementById('tpxle-ul-textarea').value = defaultTpxleUlText;
+
+    const defaultGeojsonText = JSON.stringify(
+        {
+            "type": "FeatureCollection",
+            "features": []
+        },
+        null, 4
+    );
+    document.getElementById('geojsonTextarea').value = defaultGeojsonText;
+
+	const mymap = L.map('mymap').setView([51.505, -0.09], 13);
+
+    const featureGroup = L.featureGroup();
+
+    var redMarkerIcon = L.AwesomeMarkers.icon({
+        icon: 'coffee',
+        markerColor: 'red'
+    });
+    const currentLocationMarker = L.marker(
+        [0, 0], 
+        {
+            icon: redMarkerIcon,
+            pmIgnore: true
+        }
+    );
+
+    mymap.pm.addControls({  
+        position: 'topleft',
+        drawCircleMarker: false,  
+        drawCircle: false,
+        drawPolyline: false,
+        rotateMode: true,
+        cutPolygon: false,
+        snappingOption: true,
+    });  
+    mymap.pm.setGlobalOptions({ snappable: false });
+
+	let osm = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+		maxZoom: 24,
+		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+		id: 'mapbox/streets-v11',
+		tileSize: 512,
+		zoomOffset: -1
+	});
+
+    let sat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
+        maxZoom: 24,
+        subdomains:['mt0','mt1','mt2','mt3']
+    });
+
+    osm.addTo(mymap)
+
+    function onSwitchMap() {
+        if (mymap.hasLayer(osm)) {
+            mymap.addLayer(sat);
+            mymap.removeLayer(osm);
+        } else {
+            mymap.addLayer(osm);
+            mymap.removeLayer(sat);
+        }
+    };
+
+    function createPopupString(id, name, mac) {
+        return `
+            <table>
+            <tr><td>Name:</td><td><input onChange="onMarkerChange(${id})" type='text' id="name_${id}" value='${name}'></td></tr>
+            <tr><td>MAC:</td><td><input onChange="onMarkerChange(${id})" type='text' id="mac_${id}" value='${mac}'></td></tr>
+            </table>
+       `
+    }
+
+    function setupLayer (l, name, mac) {
+        // L.PM.reInitLayer(l);
+        l.on('pm:edit', ({ layer }) => {
+            onExport();
+        });
+        const id = l._leaflet_id;
+        if (l instanceof L.Marker) {
+            l.feature = {
+                type: "Feature",
+                properties: {
+                    // id: id,
+                    name: name,
+                    mac: mac
+                }
+            };
+            l.bindPopup(createPopupString(id, name, mac));
+        };
+        featureGroup.addLayer(l);
+    };
+
+    function updateMarker (id, name, mac) {
+        // const m = mymap.pm.getGeomanLayers(true).getLayer(id);
+        const m = featureGroup.getLayer(id);
+        // m.feature.properties.id = id;
+        m.feature.properties.name = name;
+        m.feature.properties.mac = mac;
+        m.getPopup().setContent(createPopupString(id, name, mac));
+        m.getPopup().update();
+    }
+
+    function onMarkerChange(id) {
+        const name = document.getElementById(`name_${id}`).value;
+        const mac = document.getElementById(`mac_${id}`).value;
+        updateMarker(id, name, mac);
+        onExport();
+    }
+
+    function clearMap() {
+        featureGroup.eachLayer(function(layer){
+            mymap.removeLayer(layer);
+            featureGroup.removeLayer(layer);
+        })
+    }
+
+    function onImport() {
+
+        let geojsonTextarea = document.getElementById('geojsonTextarea');
+        let group = [];
+
+        try {
+
+            let features = JSON.parse(geojsonTextarea.value);
+            L.geoJSON(features, {
+                snapIgnore: true,
+                onEachFeature: (feature, layer) => {
+                    if (feature.geometry.type == 'Point') {
+                        if (feature.properties === undefined) throw new Error('Missing "properties" property from "feature"!');
+                        if (feature.properties.name === undefined) throw new Error('Missing "name" property from "properties"!');
+                        if (feature.properties.mac === undefined) throw new Error('Missing "mac" property "properties"!');
+                    }
+                    // group.push({layer: layer, name: feature.properties.name, mac: feature.properties.mac});
+                    group.push([layer, feature.properties.name, feature.properties.mac]);
+                }
+            });
+
+            clearMap();
+            group.forEach( element => { 
+                element[0].addTo(mymap);
+                setupLayer(...element);
+            });
+
+        } catch(e) {
+            alert(e.message);
+            // document.getElementById("errorTextarea").value = e.message;
+            onExport()
+        }
+    }
+
+    function onExport () {
+        document.getElementById("geojsonTextarea").value = JSON.stringify(featureGroup.toGeoJSON(), null, 4);
+    }
+
+    function onImportTPXLE() {
+
+        let tpxleULTextArea = document.getElementById('tpxle-ul-textarea');
+
+        try {
+            let tpxleUL = JSON.parse(tpxleULTextArea.value);
+
+            currentLocationMarker.setLatLng([tpxleUL.coordinates[1],tpxleUL.coordinates[0]]);
+
+            if ( !mymap.hasLayer(currentLocationMarker)) {
+                currentLocationMarker.addTo(mymap);
+            }
+
+        } catch(e) {
+            alert(e.message);
+            tpxleULTextArea.value = defaultTpxleUlText;
+        }
+    }
+
+
+
+
+
+
+    /*
+    mymap.pm.Toolbar.createCustomControl({
+        name: "custom",
+        block: "custom",
+        title: "export to GeoJSON",
+        onClick: clearMap,
+    })
+    */
+
+    mymap.on('pm:create', e => { // e.shape, e.layer
+        setupLayer(e.layer, "", "");
+        onExport();
+    });
+
+    mymap.on('pm:remove', e => { // e.shape, e.layer
+        featureGroup.removeLayer(e.layer);
+        onExport();
+    });
+
+</script>
+
+
+</body>
+</html>

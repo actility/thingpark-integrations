@@ -1,0 +1,35 @@
+{
+    "id": "5da03ee3a96ab200018d5f3c",
+    "endDevice": {
+        "devEui": "20635F0108001158",
+        "devAddr": "0204E05E",
+        "cluster": {
+            "id": 345
+        }
+    },
+    "fPort": 17,
+    "fCntDown": 1,
+    "fCntUp": 9,
+    "adr": true,
+    "confirmed": false,
+    "encrypted": false,
+    "payload": "0a50f6830000",
+    "recvTime": 1570782946959,
+    "classB": false,
+    "delayed": false,
+    "ulFrequency": 868.5,
+    "modulation": "LORA",
+    "dataRate": "SF10BW125",
+    "codingRate": "4/5",
+    "gwCnt": 1,
+    "gwInfo": [
+        {
+            "gwEui": "7276FF0039030872",
+            "rfRegion": "EU868",
+            "rssi": -47,
+            "snr": 7.5,
+            "channel": 7,
+            "radioId": 1
+        }
+    ]
+}

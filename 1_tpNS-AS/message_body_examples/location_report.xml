@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DevEUI_location xmlns="http://uri.actility.com/lora">
+	<Time>2015-01-27T10:00.123:46+01:00</Time>
+	<DevEUI>000000000F1D8693</DevEUI>
+	<DevAddr>0F1D8693</DevAddr>
+	<Lrcid>00000000</Lrcid>
+	<DevLocTime>2015-01-27T10:00:43.336+01:00</DevLocTime>
+	<DevLAT>10.11212</DevLAT>
+	<DevLON>7.44464</DevLON>
+	<DevAlt>50</DevAlt>
+</DevEUI_location>

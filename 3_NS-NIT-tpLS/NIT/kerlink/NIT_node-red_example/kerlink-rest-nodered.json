@@ -1,0 +1,286 @@
+[
+    {
+        "id": "8310acb6.63783",
+        "type": "comment",
+        "z": "490e650d.6b185c",
+        "name": "From NS to Location Solver - REST",
+        "info": "",
+        "x": 200,
+        "y": 2480,
+        "wires": []
+    },
+    {
+        "id": "e365e3cc.4abf",
+        "type": "comment",
+        "z": "490e650d.6b185c",
+        "name": "From Location Solver to NS - REST",
+        "info": "Downlink:\n\n[DataDownDto documentation](https://wmc-poc.wanesy.com/gms/application/doc#DataDownDto)\n\n[DataDownDto Swagger](https://wmc-poc.wanesy.com/gms/?url=/gms/application/openapi#/dataDown/createDataDown)",
+        "x": 200,
+        "y": 2620,
+        "wires": []
+    },
+    {
+        "id": "97f88bef.83f098",
+        "type": "comment",
+        "z": "490e650d.6b185c",
+        "name": "Kerlink (Wanesy) Integration Examples",
+        "info": "You have the full API reference:  \n[https://wmc-poc.wanesy.com/gms/application/doc#introduction](https://wmc-poc.wanesy.com/gms/application/doc#introduction)\n\nSwaggerUI sandbox:  \n[https://wmc-poc.wanesy.com/gms/?url=/gms/application/openapi](https://wmc-poc.wanesy.com/gms/?url=/gms/application/openapi)\n\nDownlink:   \n[https://wmc-poc.wanesy.com/gms/?url=/gms/application/openapi#/dataDown/createDataDown](https://wmc-poc.wanesy.com/gms/?url=/gms/application/openapi#/dataDown/createDataDown)\n",
+        "x": 170,
+        "y": 2420,
+        "wires": []
+    },
+    {
+        "id": "93bb37ce.b90fc8",
+        "type": "http in",
+        "z": "490e650d.6b185c",
+        "name": "",
+        "url": "/uplink_kerlink/0001",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 220,
+        "y": 2560,
+        "wires": [
+            [
+                "6f0640d7.1cf7a",
+                "b6bf56cb.ff7518"
+            ]
+        ]
+    },
+    {
+        "id": "6f0640d7.1cf7a",
+        "type": "http response",
+        "z": "490e650d.6b185c",
+        "name": "http response",
+        "statusCode": "",
+        "headers": {
+            "content-type": "application/json"
+        },
+        "x": 520,
+        "y": 2580,
+        "wires": []
+    },
+    {
+        "id": "55340d53.bcd404",
+        "type": "debug",
+        "z": "490e650d.6b185c",
+        "name": "debug: to Solver",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 800,
+        "y": 2500,
+        "wires": []
+    },
+    {
+        "id": "ea55c9a0.e4dc88",
+        "type": "http request",
+        "z": "490e650d.6b185c",
+        "name": "Send UL to Location Solver",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "https://dx-api.thingpark.com/location/latest/api/feeds",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "bearer",
+        "x": 1080,
+        "y": 2540,
+        "wires": [
+            [
+                "3ac0e10c.0833fe"
+            ]
+        ]
+    },
+    {
+        "id": "3ac0e10c.0833fe",
+        "type": "debug",
+        "z": "490e650d.6b185c",
+        "name": "debug: Solver response",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1110,
+        "y": 2500,
+        "wires": []
+    },
+    {
+        "id": "e9a4c472.796468",
+        "type": "inject",
+        "z": "490e650d.6b185c",
+        "name": "Sample msg - Kerlink",
+        "topic": "LoRaWAN_Uplink",
+        "payload": "{\"id\":\"5da03ee3a96ab200018d5f3c\",\"endDevice\":{\"devEui\":\"20635F0108001158\",\"devAddr\":\"0204E05E\",\"cluster\":{\"id\":345}},\"fPort\":17,\"fCntDown\":1,\"fCntUp\":9,\"adr\":true,\"confirmed\":false,\"encrypted\":false,\"payload\":\"0a50f6830000\",\"recvTime\":1570782946959,\"classB\":false,\"delayed\":false,\"ulFrequency\":868.5,\"modulation\":\"LORA\",\"dataRate\":\"SF10BW125\",\"codingRate\":\"4/5\",\"gwCnt\":1,\"gwInfo\":[{\"gwEui\":\"7276FF0039030872\",\"rfRegion\":\"EU868\",\"rssi\":-47,\"snr\":7.5,\"channel\":7,\"radioId\":1}]}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 200,
+        "y": 2520,
+        "wires": [
+            [
+                "b6bf56cb.ff7518"
+            ]
+        ]
+    },
+    {
+        "id": "b6bf56cb.ff7518",
+        "type": "function",
+        "z": "490e650d.6b185c",
+        "name": "Kerlink UL interface",
+        "func": "/******************************************/\n/*** Kerlink UL interface               ***/\n/******************************************/\n\nbody = (typeof msg.payload == 'string') ? JSON.parse(msg.payload) : msg.payload;\n\nlet feeds = {\n    // deviceEUI: \"\",                                     // mandatory\n    // time: \"\",\n    // coordinates: [],                                   // [longitude, latitude, altitude]\n                                                          // used if NS provides resolved coordinates\n    solverInput: {\n        solverInputType: \"FeedInputForGpsSolver\",\n        // sequenceNumber: 1,                             // LoRaWAN FCntUp\n        // port: 1,                                       // LoRaWAN FPort\n        // receptionTime: \"\",\n        // SF: 12,                                        // LoRaWAN Spreading Factor\n        packets: [\n            // {\n                // baseStationId: \"0805022D\",\n                // antennaId: 0,\n                // antennaCoordinates: [7.0513, 43.6181], // [longitude, latitude, altitude]\n                // antennaHeight: 150,                    // in cm\n                // SNR: 10,                               // in dB\n                // RSSI: -29,                             // in dBm\n                // barometerMeasure: 0,                   // in mB\n                // arrivalSeconds: 1,                     // in seconds\n                // arrivalAdditionalNanos: 7275           // in nanoseconds\n            // }\n        ]\n        // dynamicMotionState: \"string\",    // ['MOVING', 'STATIC', 'UNKNOWN']\n        // temperatureMeasure: 0,           // in Celsius\n        // accelerometerMeasures: [],       // measures per axis, i.e. [x, y, z]\n        // gyroscopeMeasures: [],           // measures per axis, i.e. [roll, pitch, yaw]\n        // barometerMeasure: 0,             // in mBar\n        // lastContext: \"string\"            // Base64 encoded binary solver state\n                                            // with the last calculated position\n    },\n    payload: {\n        deviceProfileId: \"ABEEWAY/MICRO\",   // Currently only Abeeway Microtracker and\n                                            // Industrial Tracker are supported. \"deviceProfileId\"\n                                            // should be set to \"ABEEWAY/MICRO\" for both\n        payloadEncoded: \"\"\n    }\n}\n\nif ('endDevice' in body) { \n    if ('devEui' in body.endDevice) {\n        feeds.deviceEUI = body.endDevice.devEui;\n    }\n}\nelse { \n    throw new Error(\"Missing property: endDevice\"); \n}\n\nif (('recvTime' in body) && (typeof body.recvTime === 'number')) { \n    let t = (new Date(body.recvTime)).toISOString();\n    feeds.time = t;\n    feeds.solverInput.receptionTime = t;\n}\nif ('fCntUp' in body) { \n    feeds.solverInput.sequenceNumber = body.fCntUp; \n}\nif ('fPort' in body) { \n    feeds.solverInput.port = body.fPort \n}\nif ('dataRate' in body) {\n    let i = body.dataRate.indexOf('BW');\n    let s = body.dataRate.substring(2, i);\n    feeds.solverInput.SF = parseInt(s);\n} \n\nif ('gwInfo' in body) {\n    for (let gateway of body.gwInfo) {\n        let packet = {};\n        if ('gwEui' in gateway) {\n            packet.baseStationId = gateway.gwEui;\n        }\n        if ('rssi' in gateway) {\n            packet.RSSI = gateway.rssi;\n        }\n        if ('snr' in gateway) {\n            packet.SNR = gateway.snr;\n        }\n        if ('radioId' in gateway) {\n            packet.antennaId = gateway.radioId;\n        }\n        feeds.solverInput.packets.push(packet);\n    }\n}\n\nif ('payload' in body) { \n    feeds.payload.payloadEncoded = body.payload; \n}\n\nmsg.payload = feeds;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 750,
+        "y": 2540,
+        "wires": [
+            [
+                "55340d53.bcd404",
+                "ea55c9a0.e4dc88",
+                "93d4cee8.68da"
+            ]
+        ]
+    },
+    {
+        "id": "d90236b4.9e4748",
+        "type": "http in",
+        "z": "490e650d.6b185c",
+        "name": "",
+        "url": "/downlink_kerlink/0001",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 230,
+        "y": 2700,
+        "wires": [
+            [
+                "eef3108d.903d5",
+                "8608984.9379868",
+                "87686173.8f468"
+            ]
+        ]
+    },
+    {
+        "id": "eef3108d.903d5",
+        "type": "http response",
+        "z": "490e650d.6b185c",
+        "name": "http response",
+        "statusCode": "",
+        "headers": {
+            "content-type": "application/json"
+        },
+        "x": 520,
+        "y": 2720,
+        "wires": []
+    },
+    {
+        "id": "fccf5d96.7ff17",
+        "type": "inject",
+        "z": "490e650d.6b185c",
+        "name": "Sample msg - Loc Solver",
+        "topic": "",
+        "payload": "{\"type\":\"downlink\",\"deveui\":\"20635F0107000011\",\"port\":\"2\",\"payload\":\"020602\"}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 210,
+        "y": 2660,
+        "wires": [
+            [
+                "87686173.8f468"
+            ]
+        ]
+    },
+    {
+        "id": "bb109952.9eaa38",
+        "type": "debug",
+        "z": "490e650d.6b185c",
+        "name": "debug: to NS",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 790,
+        "y": 2640,
+        "wires": []
+    },
+    {
+        "id": "70264870.833888",
+        "type": "http request",
+        "z": "490e650d.6b185c",
+        "name": "Send DL to Kerlink NS!!!",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "https://wmc-poc.wanesy.com/gms/application/dataDown",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "bearer",
+        "x": 1070,
+        "y": 2680,
+        "wires": [
+            [
+                "4ec5610c.98e6"
+            ]
+        ]
+    },
+    {
+        "id": "4ec5610c.98e6",
+        "type": "debug",
+        "z": "490e650d.6b185c",
+        "name": "debug: NS response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1100,
+        "y": 2640,
+        "wires": []
+    },
+    {
+        "id": "87686173.8f468",
+        "type": "function",
+        "z": "490e650d.6b185c",
+        "name": "Kerlink DL interface",
+        "func": "/******************************************/\n/*** Kerlink DL interface              ***/\n/******************************************/\n\nbody = {\n    \"fPort\": msg.payload.port,\n    \"confirmed\": false,\n    \"payload\": msg.payload.payload,\n    \"contentType\": \"HEXA\",\n    \"endDevice\": {\n        devEui: msg.payload.deveui,\n    }\n};\nmsg.payload = body;\nmsg.headers = {\n    \"content-type\": \"application/json\",\n    \"accept\": \"application/json\"\n}\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 750,
+        "y": 2680,
+        "wires": [
+            [
+                "bb109952.9eaa38",
+                "70264870.833888"
+            ]
+        ]
+    },
+    {
+        "id": "8608984.9379868",
+        "type": "debug",
+        "z": "490e650d.6b185c",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 550,
+        "y": 2640,
+        "wires": []
+    }
+]

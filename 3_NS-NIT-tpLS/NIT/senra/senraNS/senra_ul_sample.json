@@ -1,0 +1,16 @@
+{
+    "ack": false,
+    "channel": 15,
+    "datarate": 3,
+    "devClass": "A",
+    "devEui": "20635F00C800001F",
+    "freq": 905.3,
+    "gwEui": "00250C00010002D0",
+    "joinId": 2,
+    "pdu": "030A99743919CC40D03C61FDD0589630A4751AC63C3786832F14C6B0DAF9A98D9EC5",
+    "port": 17,
+    "rssi": -49,
+    "seqno": 2467,
+    "snr": 9.75,
+    "txtime": "2020-04-10T05:40:09.107Z"
+}

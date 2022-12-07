@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DevEUI_downlink xmlns="http://uri.actility.com/lora">
+	<Time>2018-10-17T15:38:46.882+02:00</Time>
+	<DevEUI>0018B20000000B20</DevEUI>
+	<FPort>8</FPort>
+	<payload_hex>9e1c4852512000220020e3831071</payload_hex>
+	<Confirmed>1</Confirmed>
+	<ValidityTime>2018-10-17T16:38:46.882+02:00</ValidityTime>
+	<FlushDownlinkQueue>1</FlushDownlinkQueue>
+</DevEUI_downlink>

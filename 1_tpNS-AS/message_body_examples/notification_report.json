@@ -1,0 +1,12 @@
+{
+	"DevEUI_notification": { 
+		"Time": "2019-01-15T11:31:19.588+02:00",
+		"DevEUI": "F03D291E001001C9",
+		"Lrcid": "00000602",
+		"DevAddr": "007E074F",
+		"Type": "reset",
+		"Var1": "admin_reset",
+		"CustomerID": "100000507",
+		"FCntDn": "0"
+	}
+}

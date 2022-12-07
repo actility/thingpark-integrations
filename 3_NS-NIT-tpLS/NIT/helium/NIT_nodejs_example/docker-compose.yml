@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+
+  app:
+    build: .
+    image: nherbert/tpxle-nit:0.0.1
+    container_name: tpxle_nit_app
+
+    #### FOR DEVELOPMENT ####
+    # volumes:
+    #   - ./src:/usr/src/app
+    # environment:
+    #   NODE_ENV: development
+    # working_dir: /usr/src/app
+    # entrypoint: ["tail"]
+    # command: ["-f","/dev/null"]
+    #########################
+
+    ports:
+      - 8081:8081
+
+  redis:
+    image: redis:alpine
+    container_name: tpxle_nit_redis
+    volumes:
+      - ./redis-data:/data
+    ports:
+      - "6379:6379"

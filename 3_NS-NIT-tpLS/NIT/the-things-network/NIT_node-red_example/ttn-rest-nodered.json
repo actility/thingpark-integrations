@@ -1,0 +1,285 @@
+[
+    {
+        "id": "6ed086d2.e33238",
+        "type": "comment",
+        "z": "cae69866.d13008",
+        "name": "TTN Integration Examples",
+        "info": "[TTN http API Reference](https://www.thethingsnetwork.org/docs/applications/http/)\n\n[TTN MQTT API Reference](https://www.thethingsnetwork.org/docs/applications/mqtt/api.html)",
+        "x": 270,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "7281baa7.fa0844",
+        "type": "comment",
+        "z": "cae69866.d13008",
+        "name": "From NS to Location Solver - REST",
+        "info": "",
+        "x": 340,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "84c79131.a87f5",
+        "type": "comment",
+        "z": "cae69866.d13008",
+        "name": "From Location Solver to NS - REST",
+        "info": "",
+        "x": 340,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "1f48a1d2.fe99de",
+        "type": "http in",
+        "z": "cae69866.d13008",
+        "name": "",
+        "url": "/uplink_ttn/0001",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 350,
+        "y": 980,
+        "wires": [
+            [
+                "67b4b3f9.0fe8fc",
+                "4c82afaf.e9b09"
+            ]
+        ]
+    },
+    {
+        "id": "67b4b3f9.0fe8fc",
+        "type": "http response",
+        "z": "cae69866.d13008",
+        "name": "http response",
+        "statusCode": "",
+        "headers": {
+            "content-type": "application/json"
+        },
+        "x": 660,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "1d0ad4cc.d0ea2b",
+        "type": "debug",
+        "z": "cae69866.d13008",
+        "name": "debug: to Solver",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 940,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "53ec6e53.507c",
+        "type": "http request",
+        "z": "cae69866.d13008",
+        "name": "Send UL to Location Solver",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://dx-api.thingpark.io/location/latest/api/feeds",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "bearer",
+        "x": 1220,
+        "y": 960,
+        "wires": [
+            [
+                "d4abe134.c64db"
+            ]
+        ]
+    },
+    {
+        "id": "d4abe134.c64db",
+        "type": "debug",
+        "z": "cae69866.d13008",
+        "name": "debug: Solver response",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 1250,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "8baec41a.466308",
+        "type": "http response",
+        "z": "cae69866.d13008",
+        "name": "http response",
+        "statusCode": "",
+        "headers": {
+            "content-type": "application/json"
+        },
+        "x": 660,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "ed6b8564.efb448",
+        "type": "inject",
+        "z": "cae69866.d13008",
+        "name": "Sample msg - Loc Solver",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"type\":\"downlink\",\"deveui\":\"20635F0108000496\",\"port\":2,\"payload\":\"030a05\"}",
+        "payloadType": "json",
+        "x": 350,
+        "y": 1080,
+        "wires": [
+            [
+                "3f9f0222.e6205e"
+            ]
+        ]
+    },
+    {
+        "id": "3f0cccb4.547054",
+        "type": "debug",
+        "z": "cae69866.d13008",
+        "name": "debug: to NS",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 930,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "2d5aa7fe.02e8b8",
+        "type": "http request",
+        "z": "cae69866.d13008",
+        "name": "Send DL to TTN NS!!!",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://integrations.thethingsnetwork.org",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "bearer",
+        "x": 1200,
+        "y": 1100,
+        "wires": [
+            [
+                "f9169ef5.d569c"
+            ]
+        ]
+    },
+    {
+        "id": "f9169ef5.d569c",
+        "type": "debug",
+        "z": "cae69866.d13008",
+        "name": "debug: NS response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1240,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "620f656d.245d8c",
+        "type": "inject",
+        "z": "cae69866.d13008",
+        "name": "Sample msg - TTN",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "LoRaWAN_Uplink",
+        "payload": "{\"end_device_ids\":{\"device_id\":\"smartbadge-3f5\",\"application_ids\":{\"application_id\":\"abeeway-tpxle\"},\"dev_eui\":\"20635F01E10004F5\",\"join_eui\":\"20635F000A004017\",\"dev_addr\":\"260B44FD\"},\"correlation_ids\":[\"as:up:01FAJMCPVH8JJNRS1WGPV0M2X0\",\"gs:conn:01FAJM2YBR80Z3DQT5XF1M3WK7\",\"gs:up:host:01FAJM2YBX46QHKYMFQE05Q84Q\",\"gs:uplink:01FAJMCPMZJW3ASQMDKFG38TTK\",\"ns:uplink:01FAJMCPN07XXGXYHG50D3HNRW\",\"rpc:/ttn.lorawan.v3.GsNs/HandleUplink:01FAJMCPN0GRFP7RA7VC0KYD3X\",\"rpc:/ttn.lorawan.v3.NsAs/HandleUplink:01FAJMCPVGYFQ24Z885PM2TK9M\"],\"received_at\":\"2021-07-14T13:48:09.459082030Z\",\"uplink_message\":{\"session_key_id\":\"AXqlQzYRgJNIwl/L8XRaBg==\",\"f_port\":18,\"f_cnt\":1,\"frm_payload\":\"A0wUlgEAnn9/dQ==\",\"rx_metadata\":[{\"gateway_ids\":{\"gateway_id\":\"tek-micro-01\",\"eui\":\"647FDAFFFE005610\"},\"timestamp\":323682596,\"rssi\":-43,\"channel_rssi\":-43,\"snr\":7,\"location\":{\"latitude\":47.43838566699402,\"longitude\":18.926505613096722,\"source\":\"SOURCE_REGISTRY\"},\"uplink_token\":\"ChoKGAoMdGVrLW1pY3JvLTAxEghkf9r//gBWEBCkgqyaARoLCJnWu4cGENy553UgoOnx57UJ\",\"channel_index\":2}],\"settings\":{\"data_rate\":{\"lora\":{\"bandwidth\":125000,\"spreading_factor\":10}},\"data_rate_index\":2,\"coding_rate\":\"4/5\",\"frequency\":\"867500000\",\"timestamp\":323682596},\"received_at\":\"2021-07-14T13:48:09.248945739Z\",\"consumed_airtime\":\"0.411648s\",\"version_ids\":{\"brand_id\":\"abeeway\",\"model_id\":\"abeeway-smart-badge\",\"hardware_version\":\"1.0\",\"firmware_version\":\"2.1\",\"band_id\":\"EU_863_870\"}}}",
+        "payloadType": "json",
+        "x": 330,
+        "y": 940,
+        "wires": [
+            [
+                "4c82afaf.e9b09"
+            ]
+        ]
+    },
+    {
+        "id": "4c82afaf.e9b09",
+        "type": "function",
+        "z": "cae69866.d13008",
+        "name": "TTN UL interface",
+        "func": "/******************************************/\n/*** TTN UL interface                   ***/\n/******************************************/\n\nlet translate_uplink = body => {\n\n    let feeds = {\n        // deviceEUI: \"\",                                     // mandatory\n        // time: \"\",\n        // coordinates: [],                                   // [longitude, latitude, altitude]\n                                                            // used if NS provides resolved coordinates\n        solverInput: {\n            solverInputType: \"FeedInputForGenericSolver\",\n            // sequenceNumber: 1,                             // LoRaWAN FCntUp\n            // port: 1,                                       // LoRaWAN FPort\n            // receptionTime: \"\",\n            // SF: 12,                                        // LoRaWAN Spreading Factor\n            packets: [\n                // {\n                    // baseStationId: \"0805022D\",\n                    // antennaId: 0,\n                    // antennaCoordinates: [7.0513, 43.6181], // [longitude, latitude, altitude]\n                    // antennaHeight: 150,                    // in cm\n                    // SNR: 10,                               // in dB\n                    // RSSI: -29,                             // in dBm\n                    // barometerMeasure: 0,                   // in mB\n                    // arrivalSeconds: 1,                     // in seconds\n                    // arrivalAdditionalNanos: 7275           // in nanoseconds\n                // }\n            ]\n            // dynamicMotionState: \"string\",    // ['MOVING', 'STATIC', 'UNKNOWN']\n            // temperatureMeasure: 0,           // in Celsius\n            // accelerometerMeasures: [],       // measures per axis, i.e. [x, y, z]\n            // gyroscopeMeasures: [],           // measures per axis, i.e. [roll, pitch, yaw]\n            // barometerMeasure: 0,             // in mBar\n            // lastContext: \"string\"            // Base64 encoded binary solver state\n                                                // with the last calculated position\n        },\n        payload: {\n            deviceProfileId: \"ABEEWAY/MICRO\",   // Currently only Abeeway Microtracker and\n                                                // Industrial Tracker are supported. \"deviceProfileId\"\n                                                // should be set to \"ABEEWAY/MICRO\" for both\n            payloadEncoded: \"\"\n        }\n    }\n         \n    if (body.end_device_ids && body.end_device_ids.dev_eui) {\n        feeds.deviceEUI = body.end_device_ids.dev_eui;\n    } else {\n        throw new Error(\"Missing property: end_device_ids.dev_eui\");\n    }\n\n    if (body.received_at) {\n        feeds.time = new Date(body.received_at).toISOString();\n        feeds.solverInput.receptionTime = feeds.time;\n    }\n\n    if (body.uplink_message) {\n\n        if (body.uplink_message.f_cnt) {\n            feeds.solverInput.sequenceNumber = body.uplink_message.f_cnt;\n        }\n\n        if (body.uplink_message.f_port) {\n            feeds.solverInput.port = body.uplink_message.f_port;\n        }\n            \n        if (body.uplink_message.frm_payload) {\n            feeds.payload.payloadEncoded = Buffer.from(body.uplink_message.frm_payload, 'base64').toString('hex');\n        }\n\n        if (\n            body.uplink_message.settings &&\n            body.uplink_message.settings.data_rate &&\n            body.uplink_message.settings.data_rate.lora &&\n            body.uplink_message.settings.data_rate.lora.spreading_factor\n        ) {\n            feeds.solverInput.SF = body.uplink_message.settings.data_rate.lora.spreading_factor;\n        }    \n\n        let gateways = body.uplink_message.rx_metadata;\n        if (gateways && Array.isArray(gateways)) {\n            let packet;\n            for (let i=0; i<gateways.length; i++) {\n                packet = {};\n                if(gateways[i].gateway_ids && gateways[i].gateway_ids.gateway_id) { \n                    packet.baseStationId = gateways[i].gateway_ids.gateway_id; \n                }\n                if (gateways[i].snr) { \n                    packet.SNR = gateways[i].snr; \n                }\n                if (gateways[i].rssi) { \n                    packet.RSSI = gateways[i].rssi; \n                }\n\n                if ( gateways[i].location ) {\n                    if ( gateways[i].location.longitude && gateways[i].location.latitude ) {\n                        packet.antennaCoordinates = [ \n                            gateways[i].location.longitude,\n                            gateways[i].location.latitude\n                        ];\n                        if (gateways[i].location.altitude) {\n                            packet.antennaCoordinates.push(gateways[i].location.altitude);\n                        }\n                    }\n                }\n\n                feeds.solverInput.packets.push(packet);\n            }\n        }\n\n    }\n\n    return feeds;\n\n}\n\n\nbody = (typeof msg.payload == 'string') ? JSON.parse(msg.payload) : msg.payload;\n\nmsg.payload = translate_uplink(body);\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 890,
+        "y": 960,
+        "wires": [
+            [
+                "1d0ad4cc.d0ea2b",
+                "53ec6e53.507c"
+            ]
+        ]
+    },
+    {
+        "id": "3f9f0222.e6205e",
+        "type": "function",
+        "z": "cae69866.d13008",
+        "name": "TTN DL interface",
+        "func": "/******************************************/\n/*** TTN DL interface              ***/\n/******************************************/\n\nlet translate_downlink = body => {\n\n    return {\n        // \"dev_eui\": body.deveui.toLowerCase(),\n        \"downlinks\": [{\n            \"frm_payload\": Buffer.from(body.payload, 'hex').toString('base64'),\n            \"f_port\": body.port,\n            \"priority\": \"NORMAL\"\n        }]\n    };\n\n    \n}\n\n\n//\n// When you register a device in TTN\n// make sure that dev_id = deveui.toLowerCase() !!!\n//\n\nbody = msg.payload;\nmsg.payload = translate_downlink(body);\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 890,
+        "y": 1100,
+        "wires": [
+            [
+                "3f0cccb4.547054",
+                "2d5aa7fe.02e8b8"
+            ]
+        ]
+    },
+    {
+        "id": "dbd77151.b9f34",
+        "type": "http in",
+        "z": "cae69866.d13008",
+        "name": "",
+        "url": "/downlink_ttn/0001",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 360,
+        "y": 1120,
+        "wires": [
+            [
+                "3f9f0222.e6205e",
+                "8baec41a.466308"
+            ]
+        ]
+    }
+]

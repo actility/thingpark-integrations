@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DevEUI_downlink_Sent xmlns="http://uri.actility.com/lora">
+	<Time>2015-01-27T10:00:46.336+01:00</Time>
+	<DevEUI>000000000F1D8693</DevEUI>
+	<FPort>2</FPort>
+	<FCntUp>7022</FCntUp>
+	<FCntDn>22</FCntDn>
+	<Lrcid>00000000</Lrcid>
+	<SpFact>7</SpFact>
+	<SubBand>G1</SubBand>
+	<Channel>LC3</Channel>
+	<Lrrid>0000000a</Lrrid>
+	<DeliveryStatus>1</DeliveryStatus>
+	<DeliveryFailedCause1>A3</DeliveryFailedCause1>
+	<DeliveryFailedCause2>00</DeliveryFailedCause2>
+	<CustomerID>100000507</CustomerID>
+	<CustomerData>{"loc":{"lat":"43.58081","lon":"1.4421667"},"alr":{"pro":"STL","ver":"1"}}</CustomerData>
+	<TransmissionSlot>1</TransmissionSlot>
+	<Frequency>868.5</Frequency>
+	<CorrelationID>4434704901C7450B</CorrelationID>
+</DevEUI_downlink_Sent>

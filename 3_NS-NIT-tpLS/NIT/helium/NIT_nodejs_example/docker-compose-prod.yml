@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+
+  app:
+    image: nherbert/tpxle-nit:0.0.1
+    container_name: tpxle_nit_app
+    ports:
+      - 8081:8081
+
+  redis:
+    image: redis:alpine
+    container_name: tpxle_nit_redis
+    volumes:
+      - ./redis-data:/data
+    ports:
+      - "6379:6379"

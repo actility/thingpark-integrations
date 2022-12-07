@@ -1,0 +1,54 @@
+{
+    "up_packet": {
+      "uid": "ce1c61e8-83ab-4ddb-88be-fc149e10bdd3",
+      "spreading_factor": 7,
+      "size": 26,
+      "received_at": "2021-04-13T07:53:24.909792",
+      "port": 5,
+      "payload_encrypted": false,
+      "payload": "0100D9021D0400310502070DB2",
+      "parsed": null,
+      "mtype": "unconfirmed_data_up",
+      "modu": "LORA",
+      "mic_pass": true,
+      "gwrx": [
+        {
+          "tmst": 4250994035,
+          "time": "2021-04-13T07:53:23.926019Z",
+          "stat": {
+            "long": 9.98784,
+            "lati": 53.54534,
+            "alti": -2
+          },
+          "srv_rcv_time": 1618300404146945,
+          "rssi": -48,
+          "lsnr": 15,
+          "gweui": "7276FF002E050039",
+          "ant": 0
+        },
+        {
+          "tmst": 4250994035,
+          "time": "2021-04-13T07:53:23.926019Z",
+          "stat": {
+            "long": 9.98784,
+            "lati": 53.54534,
+            "alti": -2
+          },
+          "srv_rcv_time": 1618300404146945,
+          "rssi": -98,
+          "lsnr": 14,
+          "gweui": "7276FF002E050039",
+          "ant": 1
+        }
+      ],
+      "freq": 867.7,
+      "fopts": "",
+      "fcnt": 1732,
+      "device_eui": "A81758FFFE03AD50",
+      "datr": "SF7BW125",
+      "codr": "4/5",
+      "bandwidth": 125,
+      "ack": null
+    }
+}
+  
